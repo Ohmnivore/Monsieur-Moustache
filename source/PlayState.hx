@@ -12,9 +12,12 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
 import flixel.util.FlxVector;
+import gen.Background;
+import gen.Blizzard;
 import gen.GenTilemap;
 import gen.Platform;
 import inp.DragNRelease;
+import flixel.group.FlxTypedGroup;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -22,7 +25,7 @@ import inp.DragNRelease;
 class PlayState extends FlxState
 {
 	public var p:Player;
-	public var cMap:GenTilemap;
+	public var cMap:FlxTypedGroup<GenTilemap>;
 	public var drag:DragNRelease;
 	public var canJump:Bool = false;
 	public var flood:Flood;
@@ -35,46 +38,40 @@ class PlayState extends FlxState
 		super.create();
 		Reg.state = this;
 		
-		cMap = new GenTilemap(0);
+		cMap = new FlxTypedGroup();
 		add(cMap);
+		var firstMap:GenTilemap = new GenTilemap(0);
+		cMap.add(firstMap);
 		
-		FlxG.camera.bgColor = 0x44220022;
+		FlxG.camera.bgColor = Background.getRandColor();
 		FlxG.camera.scroll.x = 0;
 		
-		p = new Player(cMap.first.x - 4, cMap.first.y - 32);
+		p = new Player(firstMap.first.x - 4, firstMap.first.y - 32);
 		add(p);
+		add(p.stretchSpr);
 		
-		drag = new DragNRelease(null, onReleased);
+		drag = new DragNRelease(onPressed, onReleased);
 		
 		flood = new Flood();
+		add(new Blizzard(FlxG.width, FlxG.height, p, flood));
 		add(flood);
+	}
+	
+	private function onPressed(D:DragNRelease):Void
+	{
+		
 	}
 	
 	private function onReleased(D:DragNRelease):Void
 	{
 		if (canJump)
 		{
-			var v:FlxVector = new FlxVector();
-			v.x = D.endPoint.x - D.startPoint.x;
-			v.y = D.startPoint.y - D.endPoint.y;
-			
-			if (v.length > 40.0)
-			{
-				v = v.normalize();
-				v = v.scale(40.0);
-			}
-			
 			if (p.velocity.y < 0)
-				p.velocity.y += v.y * Player.JUMPVEL / 40.0;
+				p.velocity.y -= D.delta.y * Player.JUMPVEL / 40.0;
 			else
-				p.velocity.y = v.y * Player.JUMPVEL / 40.0;
-			p.velocity.x = -v.x * Player.XVEL / 40.0;
+				p.velocity.y = -D.delta.y * Player.JUMPVEL / 40.0;
+			p.velocity.x = -D.delta.x * Player.XVEL / 40.0;
 		}
-	}
-	
-	private function onOverlap(M:FlxTilemap, P:Player):Void
-	{
-		canJump = true;
 	}
 	
 	/**
@@ -92,20 +89,73 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		canJump = false;
-		if (p.overlaps(cMap, true))
+		
+		//drag.update();
+		//super.update();
+		
+		if (FlxG.keys.pressed.W)
+		{
+			p.acceleration.y = 0;
+			p.velocity.y -= 5;
+		}
+		if (FlxG.keys.pressed.S)
+		{
+			p.acceleration.y = Player.GRAV;
+			p.velocity.y = 0;
+		}
+		
+		var highest:GenTilemap = cMap.getFirstExisting();
+		for (map in cMap.members)
+		{
+			if (p.y + FlxG.height / 2 < map.y)
+			{
+				remove(map, true);
+				map.kill();
+				map.destroy();
+				map = null;
+			}
+			
+			if (map != null)
+			{
+				updateMap(map);
+				
+				if (map.y < highest.y)
+					highest = map;
+			}
+		}
+		if (highest != null)
+		{
+			if (p.y - FlxG.height / 2 <= highest.y)
+			{
+				cMap.add(new GenTilemap(highest.y - FlxG.height * 2));
+			}
+		}
+		FlxG.camera.scroll.y += (p.y - (FlxG.camera.scroll.y + FlxG.height * 0.6)) * 0.04;
+		
+		drag.update();
+		if (drag.pressed)
+		{
+			p.stretch = true;
+			p.stretchDest.x = drag.delta.x;
+			p.stretchDest.y = drag.delta.y;
+		}
+		else
+		{
+			p.stretch = false;
+		}
+		
+		super.update();
+	}
+	
+	private function updateMap(M:GenTilemap):Void
+	{
+		if (p.overlaps(M, true))
 		{
 			canJump = true;
 		}
-		FlxG.collide(cMap, p, p.onCollide);
-		
-		drag.update();
-		
-		super.update();
-		
-		if (FlxG.keys.pressed.W)
-			FlxG.camera.scroll.y -= 4;
-		
-		//FlxG.camera.scroll.y -= (p.y - FlxG.camera.scroll.y + FlxG.height / 2) * 0.5;
-		FlxG.camera.scroll.y = p.y - FlxG.height / 1.5;
-	}	
+		if (FlxG.collide(M, p, p.onCollide))
+		{
+			canJump = true;
+		}
+	}
 }

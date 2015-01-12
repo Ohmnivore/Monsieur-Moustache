@@ -2,6 +2,7 @@ package gen;
 
 import ent.Player;
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRandom;
@@ -28,11 +29,17 @@ class GenTilemap extends FlxTilemap
 		widthInTiles = cast FlxG.width / TILESIZE;
 		heightInTiles = cast FlxG.height * 2 / TILESIZE;
 		
-		FlxG.worldBounds.set(0, Y - 2.5 * FlxG.height, FlxG.width, FlxG.height * 5);
+		FlxG.worldBounds.set(0, Y - 16, FlxG.width, FlxG.height * 5);
 		
 		initData();
 		loadTiles();
-		loadMap(tempData, GraphicAuto, TILESIZE, TILESIZE, FlxTilemap.AUTO, 0, 1, 1);
+		tempData = Beautify.getBeautiful(tempData, widthInTiles);
+		loadMap(tempData, "images/tiles.png", TILESIZE, TILESIZE, FlxTilemap.OFF, 0, 1, 1);
+		
+		setTileProperties(Beautify.BARREL_BOT, FlxObject.NONE);
+		setTileProperties(Beautify.BARREL_TOP, FlxObject.NONE);
+		setTileProperties(Beautify.CRATE, FlxObject.NONE);
+		setTileProperties(Beautify.VENT, FlxObject.NONE);
 		
 		var iX:Int = 1;
 		var iStr:String = "";
@@ -49,7 +56,7 @@ class GenTilemap extends FlxTilemap
 			
 			iX++;
 		}
-		trace(iStr);
+		//trace(iStr);
 		
 		x = 0;
 		y = Y;
@@ -96,7 +103,7 @@ class GenTilemap extends FlxTilemap
 	private function loadTiles():Void
 	{
 		var lastSpawn:FlxPoint = new FlxPoint(widthInTiles / 2, heightInTiles - 2);
-		setDataTile(cast lastSpawn.x, cast lastSpawn.y, 1);
+		addPlatform(cast lastSpawn.x - 2, cast lastSpawn.y, widthInTiles - 2);
 		first = new FlxPoint(lastSpawn.x * TILESIZE, lastSpawn.y * TILESIZE);
 		
 		while (lastSpawn.y > 3)
@@ -115,15 +122,25 @@ class GenTilemap extends FlxTilemap
 				setDataTile(cast newSpawn.x, cast newSpawn.y, 1);
 			else
 			{
-				var strip:Strip = new Strip(cast newSpawn.x, w, widthInTiles - 1, 1);
-				trace(strip.getArr());
-				for (i in strip.getArr())
-				{
-					setDataTile(i, cast newSpawn.y, 1);
-				}
+				addPlatform(cast newSpawn.x, cast newSpawn.y, w);
 			}
 			
 			lastSpawn = newSpawn;
+		}
+	}
+	
+	private function addPlatform(X:Int, Y:Int, Width:Int):Void
+	{
+		var strip:Strip = new Strip(cast X, Width, widthInTiles - 1, 1);
+		
+		var dV:Array<Int> = Strip.getVerboseArr(strip.width);
+		var i:Int = 0;
+		var d:Array<Int> = strip.getArr();
+		while (i < d.length)
+		{
+			setDataTile(d[i], Y, dV[i]);
+			
+			i++;
 		}
 	}
 }

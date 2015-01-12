@@ -27,7 +27,7 @@ class Flood extends FlxSprite
 		
 		super.update();
 		
-		if (Reg.state.p.y > y)
+		if (Reg.state.p.y > y + 8)
 			FlxG.switchState(new PlayState());
 	}
 }

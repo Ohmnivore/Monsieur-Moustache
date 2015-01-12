@@ -18,8 +18,16 @@ class GenSettings
 	public var minVelX:Float = 0.1;
 	public var maxVelX:Float = 0.6;
 	
-	public function new() 
+	private var ind:Int;
+	private var diff:Float;
+	
+	public function new(Index:Int = 0)
 	{
 		
 	}
+	
+	//private function getDiff():Float
+	//{
+		//
+	//}
 }

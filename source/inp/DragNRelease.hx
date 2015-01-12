@@ -1,6 +1,7 @@
 package inp;
 import flixel.FlxG;
 import flixel.util.FlxPoint;
+import flixel.util.FlxVector;
 
 /**
  * ...
@@ -8,13 +9,16 @@ import flixel.util.FlxPoint;
  */
 class DragNRelease
 {
+	private static var MAXDRAG:Float = 40.0;
+	
 	public var pressed:Bool = false;
 	
 	public var startPoint:FlxPoint;
 	public var endPoint:FlxPoint;
+	public var delta:FlxVector;
 	
 	public var onPressed:DragNRelease->Void;
-	public var onReleased:DragNRelease->Void;
+	public var onReleased:DragNRelease-> Void;
 	
 	public function new(OnPressed:DragNRelease->Void, OnReleased:DragNRelease->Void) 
 	{
@@ -23,6 +27,7 @@ class DragNRelease
 		
 		startPoint = new FlxPoint();
 		endPoint = new FlxPoint();
+		delta = new FlxVector();
 	}
 	
 	public function update():Void
@@ -48,6 +53,14 @@ class DragNRelease
 		if (FlxG.mouse.pressed)
 		{
 			FlxG.mouse.getScreenPosition().copyTo(endPoint);
+			delta.x = endPoint.x - startPoint.x;
+			delta.y = endPoint.y - startPoint.y;
+			
+			if (delta.length > MAXDRAG)
+			{
+				delta = delta.normalize();
+				delta = delta.scale(MAXDRAG);
+			}
 		}
 	}
 }
