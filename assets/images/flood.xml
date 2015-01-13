@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<opt bgColor="0xff000000" scale="4" />
+	<img src="flood.psd" width="16" height="32" />
+	<anim name="idle" rate="6" loop="true" frames="0, 1, 2" />
+</data>

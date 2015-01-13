@@ -37,10 +37,9 @@ class PlayState extends FlxState
 	{
 		super.create();
 		Reg.state = this;
-		
 		cMap = new FlxTypedGroup();
 		add(cMap);
-		var firstMap:GenTilemap = new GenTilemap(0);
+		var firstMap:GenTilemap = new GenTilemap(0, true);
 		cMap.add(firstMap);
 		
 		FlxG.camera.bgColor = Background.getRandColor();
@@ -53,6 +52,7 @@ class PlayState extends FlxState
 		drag = new DragNRelease(onPressed, onReleased);
 		
 		flood = new Flood();
+		flood.speed = firstMap.settings.floodSpeed;
 		add(new Blizzard(FlxG.width, FlxG.height, p, flood));
 		add(flood);
 	}
@@ -64,7 +64,7 @@ class PlayState extends FlxState
 	
 	private function onReleased(D:DragNRelease):Void
 	{
-		if (canJump)
+		if (canJump && p.alive)
 		{
 			if (p.velocity.y < 0)
 				p.velocity.y -= D.delta.y * Player.JUMPVEL / 40.0;
@@ -90,9 +90,6 @@ class PlayState extends FlxState
 	{
 		canJump = false;
 		
-		//drag.update();
-		//super.update();
-		
 		if (FlxG.keys.pressed.W)
 		{
 			p.acceleration.y = 0;
@@ -114,26 +111,35 @@ class PlayState extends FlxState
 				map.destroy();
 				map = null;
 			}
-			
-			if (map != null)
+			else
 			{
-				updateMap(map);
-				
-				if (map.y < highest.y)
-					highest = map;
+				if (map.velocity != null)
+				{
+					updateMap(map);
+					
+					if (map.y < highest.y)
+						highest = map;
+				}
 			}
 		}
 		if (highest != null)
 		{
-			if (p.y - FlxG.height / 2 <= highest.y)
+			if (p.y - FlxG.height / 1.5 <= highest.y)
 			{
-				cMap.add(new GenTilemap(highest.y - FlxG.height * 2));
+				var n:GenTilemap = new GenTilemap(highest.y - FlxG.height * 2);
+				flood.speed = n.settings.floodSpeed;
+				n.update();
+				
+				cMap.add(n);
 			}
 		}
-		FlxG.camera.scroll.y += (p.y - (FlxG.camera.scroll.y + FlxG.height * 0.6)) * 0.04;
+		if (p.alive)
+			FlxG.camera.scroll.y += (p.y - (FlxG.camera.scroll.y + FlxG.height * 0.6)) * 0.04;
+		else
+			FlxG.camera.scroll.y += (p.y - (FlxG.camera.scroll.y + FlxG.height * 0.80)) * 0.04;
 		
 		drag.update();
-		if (drag.pressed)
+		if (drag.pressed && p.alive)
 		{
 			p.stretch = true;
 			p.stretchDest.x = drag.delta.x;

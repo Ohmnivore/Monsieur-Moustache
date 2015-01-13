@@ -30,7 +30,7 @@
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
 	<assets path="assets" />
-	<assets path="assets/images" rename="images" include="*.png|*.xml" />
+	<assets path="assets/images" rename="images" include="*.png" />
 	
 	<!--------------------------------LIBRARIES------------------------------------->
 
@@ -80,4 +80,5 @@
 	<!--------------------------------CUSTOM---------------------------------------->
 	
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+	<haxedef name="fdb" if="target_flash"/>
 </project>

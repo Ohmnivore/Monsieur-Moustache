@@ -16,15 +16,15 @@ class GenTilemap extends FlxTilemap
 	static public var TILESIZE:Int = 8;
 	
 	public var first:FlxPoint;
+	public var settings:GenSettings;
 	
-	private var settings:GenSettings;
 	private var tempData:Array<Int> = [];
 	
-	public function new(Y:Float) 
+	public function new(Y:Float, Reset:Bool = false) 
 	{
 		super();
 		
-		settings = new GenSettings();
+		settings = new GenSettings(Reset);
 		
 		widthInTiles = cast FlxG.width / TILESIZE;
 		heightInTiles = cast FlxG.height * 2 / TILESIZE;

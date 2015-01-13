@@ -1,4 +1,6 @@
 package ent;
+import flixel.effects.particles.FlxEmitter;
+import flixel.effects.particles.FlxEmitterExt;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -30,6 +32,7 @@ class Player extends FlxSprite
 		
 		animation.add("idle", [0, 1], 2, true);
 		animation.add("stretch", [8], 30, false);
+		animation.add("dead", [9], 30, false);
 		animation.play("idle");
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		setFacingFlip(FlxObject.LEFT, true, false);
@@ -49,9 +52,12 @@ class Player extends FlxSprite
 	
 	public function onCollide(M:FlxTilemap, P:Player):Void
 	{
-		velocity.x = 0;
-		
-		animation.play("idle");
+		if (alive)
+		{
+			velocity.x = 0;
+			
+			animation.play("idle");
+		}
 	}
 	
 	override public function update():Void 
@@ -76,6 +82,63 @@ class Player extends FlxSprite
 		}
 		
 		super.update();
+	}
+	
+	public function onDeath():Void
+	{
+		if (alive)
+		{
+			FlxG.camera.shake(0.02, 0.5, recenterCam);
+			
+			Reg.state.add(new DeathEmitter(this));
+		}
+		
+		alive = false;
+		animation.play("dead", true);
+		acceleration.y = 0;
+		velocity.y = -Reg.state.flood.speed;
+		stretch = false;
+	}
+	
+	private function recenterCam():Void
+	{
+		FlxG.camera.scroll.x = 0;
+	}
+}
+
+class DeathEmitter extends FlxEmitter
+{
+	private var p:Player;
+	
+	public function new(P:Player)
+	{
+		super(P.x + P.width / 2, P.y - 8);
+		p = P;
+		
+		makeParticles("images/particle.png", 5, 0, false, 0, false);
+		
+		//setMotion(60, 1, 5, 60, 1, 10);
+		setAlpha(0.8, 1.0, 0.4, 0.6);
+		//setColor(Player.ARM_COLOR, 0xff6AD622);
+		setColor(Player.ARM_COLOR, 0xff6AD622);
+		setYSpeed( -5, 1);
+		setXSpeed( -20, 20);
+		
+		start(true, 1, 0.1, 0, 1);
+		for (m in members)
+		{
+			m.velocity.y += p.velocity.y;
+		}
+	}
+	
+	override public function update():Void 
+	{
+		super.update();
+		
+		//for (m in members)
+		//{
+			//m.velocity.y += p.velocity.y;
+		//}
 	}
 }
 

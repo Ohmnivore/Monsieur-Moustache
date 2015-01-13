@@ -6,28 +6,61 @@ package gen;
  */
 class GenSettings
 {
-	public var minTime:Float = 0.33;
-	public var maxTime:Float = 0.67;
+	static private var ind:Int = 0;
 	
-	public var minWidth:Int = 3;
-	public var maxWidth:Int = 6;
+	public var floodSpeed:Float;
 	
-	public var minGrav:Float = 1.2;
-	public var maxGrav:Float = 1.5;
+	public var minTime:Float;
+	public var maxTime:Float;
 	
-	public var minVelX:Float = 0.1;
-	public var maxVelX:Float = 0.6;
+	public var minWidth:Int;
+	public var maxWidth:Int;
 	
-	private var ind:Int;
+	public var minGrav:Float;
+	public var maxGrav:Float;
+	
+	public var minVelX:Float;
+	public var maxVelX:Float;
+	
 	private var diff:Float;
+	private var diff2:Float;
+	private var invDiff:Float;
 	
-	public function new(Index:Int = 0)
+	public function new(Reset:Bool = false)
 	{
+		if (Reset)
+			ind = 0;
 		
+		getDiff();
+		
+		minTime = 0.33 + 0.10 * diff;
+		maxTime = 0.67 + 0.05 * diff;
+		
+		minWidth = cast 2 + 2 * invDiff;
+		maxWidth = cast 6 - 2 * diff;
+		
+		minGrav = 1.2 - 0.1 * diff;
+		maxGrav = 1.2 - 0.16 * diff;
+		
+		minVelX = 0.1 + 0.2 * diff;
+		maxVelX = 0.4 + 0.2 * diff;
+		
+		floodSpeed = 25.0 + 25.0 * diff2;
+		//floodSpeed = 50;
 	}
 	
-	//private function getDiff():Float
-	//{
-		//
-	//}
+	private function getDiff():Void
+	{
+		diff = Math.sqrt(ind) * 0.2;
+		diff2 = Math.sqrt(ind) * 0.5;
+		
+		if (diff > 1.0)
+			diff = 1.0;
+		if (diff2 > 1.0)
+			diff2 = 1.0;
+		
+		invDiff = 1.0 - diff;
+		
+		ind++;
+	}
 }
