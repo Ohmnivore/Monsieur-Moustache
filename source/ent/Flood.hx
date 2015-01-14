@@ -64,8 +64,9 @@ class Flood extends FlxSpriteGroup
 		frameHolder.animation.play(Frame, true);
 		frameHolder.update();
 		
-		Spr.makeGraphic(FlxG.width + 64, FlxG.height, 0xff20302E, true);
-		Spr.alpha = 0.6;
+		Spr.makeGraphic(FlxG.width + 64, FlxG.height, 0xff4B8473, true);
+		Spr.alpha = 0.7;
+		//Spr.blend = flash.display.BlendMode.MULTIPLY;
 		
 		var iX:Int = 0;
 		while (iX < width)
@@ -88,7 +89,7 @@ class Flood extends FlxSpriteGroup
 	override public function update():Void 
 	{
 		if (firstJump)
-			velocity.y = -7;
+			velocity.y = -2;
 		else
 			velocity.y = -speed;
 		
@@ -100,8 +101,6 @@ class Flood extends FlxSpriteGroup
 		if (Reg.state.p.y > y + 8)
 		{
 			Reg.state.p.onDeath();
-			
-			new FlxTimer(2.0, function(T:FlxTimer) { FlxG.switchState(new PlayState()); } );
 		}
 		
 		//Animation

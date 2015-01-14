@@ -25,6 +25,8 @@ import score.Score;
 import score.ScoreIndicator;
 import score.ScoreText;
 import sfx.Sound;
+import ui.Hint;
+import ui.Util;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -49,6 +51,8 @@ class PlayState extends FlxState
 		BillBoard.initPhrases();
 		Score.loadScore();
 		Reg.state = this;
+		persistentUpdate = true;
+		Util.blip();
 		
 		backGround = new FlxGroup();
 		add(backGround);
@@ -75,6 +79,7 @@ class PlayState extends FlxState
 		hud = new FlxGroup();
 		add(hud);
 		
+		hud.add(new Hint(FlxG.height * 1.7));
 		hud.add(new ScoreBestText(p));
 		hud.add(new ScoreText(p));
 		if (Score.sBest != 0)
@@ -119,6 +124,7 @@ class PlayState extends FlxState
 	{
 		canJump = false;
 		
+		#if !FLX_NO_DEBUG
 		if (FlxG.keys.pressed.W)
 		{
 			p.acceleration.y = 0;
@@ -129,6 +135,7 @@ class PlayState extends FlxState
 			p.acceleration.y = Player.GRAV;
 			p.velocity.y = 0;
 		}
+		#end
 		
 		var highest:GenTilemap = cMap.getFirstExisting();
 		for (map in cMap.members)

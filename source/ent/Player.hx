@@ -9,6 +9,8 @@ import flixel.util.FlxPoint;
 import flixel.util.FlxSpriteUtil;
 import score.Score;
 import sfx.Sound;
+import social.Twitter;
+import ui.GameOverMenu;
 
 /**
  * ...
@@ -95,12 +97,15 @@ class Player extends FlxSprite
 			
 			Reg.state.add(new DeathEmitter(this));
 			
-			Score.saveScore();
+			//Score.saveScore();
 			
 			if (Score.s > Score.sBest)
 				Sound.playHighscore();
 			else
 				Sound.playDeath();
+			
+			Reg.state.hud.clear();
+			Reg.state.openSubState(new GameOverMenu());
 		}
 		
 		alive = false;

@@ -3,14 +3,14 @@
 
 * Graphics:
  * Character different color from white platforms
- * Background and liquid color brighter, more happy
+ * Background color brighter, more happy
  * Figure out stretching animation
 
 * Feel & Gameplay:
  * More stretch feel
 
 * SFX:
- * Main track (loopable)
+ * Find a better main track (loopable)
 
-* Add menu
-* Integrate Fb/Twitter/Google APIs
+* UI:
+ * Share score on Facebook

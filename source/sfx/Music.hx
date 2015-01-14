@@ -1,6 +1,7 @@
 package sfx;
 
 import flixel.FlxG;
+import flixel.system.FlxSound;
 import flixel.util.FlxRandom;
 
 /**
@@ -14,8 +15,9 @@ class Music
 	
 	static public function play():Void
 	{
-		FlxG.sound.playMusic(selectTrack(), 1, false);
-		FlxG.sound.music.onComplete = play;
+		var m:String = selectTrack();
+		var s:FlxSound = FlxG.sound.play(m, 1, false, true, play);
+		s.persist = true;
 	}
 	
 	static private function selectTrack():String
