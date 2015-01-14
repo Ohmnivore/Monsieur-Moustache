@@ -2,8 +2,6 @@
  * Make sure jumps at higher levels are actually feasible
 
 * Graphics:
- * Character different color from white platforms
- * Background color brighter, more happy
  * Figure out stretching animation
 
 * Feel & Gameplay:
@@ -14,3 +12,7 @@
 
 * UI:
  * Share score on Facebook
+
+* Biz:
+ * Find another name
+ * Compile to Desktop, HTML5, Android, and iOS + set ScaleMode

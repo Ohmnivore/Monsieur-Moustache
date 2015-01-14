@@ -44,7 +44,7 @@ class MenuState extends PlayState
 		hud.add(mute.click);
 		var muteDescr:UIText = new UIText(mute.x + mute.width + 1, 3, "Mute", 8, 100);
 		muteDescr.alignment = "left";
-		add(muteDescr);
+		hud.add(muteDescr);
 	}
 	
 	private function doMute(Mute:Bool):Void
