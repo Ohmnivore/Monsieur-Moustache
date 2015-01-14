@@ -7,11 +7,10 @@
  * Figure out stretching animation
 
 * Feel & Gameplay:
- * Liquid starts lower -> give player time to realize what's happening
- * More vertical
  * More stretch feel
 
-* Add music
-* Add sound effects
+* SFX:
+ * Main track (loopable)
+
 * Add menu
 * Integrate Fb/Twitter/Google APIs

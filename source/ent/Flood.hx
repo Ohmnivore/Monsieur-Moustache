@@ -13,6 +13,7 @@ class Flood extends FlxSpriteGroup
 {
 	public var maxDistance:Float = 80;
 	public var speed:Float = 5;
+	public var firstJump:Bool = true;
 	
 	private var frameHolder:FlxSprite;
 	private var frameZero:FlxSprite;
@@ -86,7 +87,10 @@ class Flood extends FlxSpriteGroup
 	
 	override public function update():Void 
 	{
-		velocity.y = -speed;
+		if (firstJump)
+			velocity.y = -7;
+		else
+			velocity.y = -speed;
 		
 		if (y - Reg.state.p.y > maxDistance)
 			y = Reg.state.p.y + maxDistance;

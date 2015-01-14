@@ -8,6 +8,7 @@ import flixel.tile.FlxTilemap;
 import flixel.util.FlxPoint;
 import flixel.util.FlxSpriteUtil;
 import score.Score;
+import sfx.Sound;
 
 /**
  * ...
@@ -17,7 +18,7 @@ class Player extends FlxSprite
 {
 	public static var GRAV:Float = 400;
 	//public static var JUMPVEL:Float = 200;
-	public static var JUMPVEL:Float = 200;
+	public static var JUMPVEL:Float = 280;
 	public static var XVEL:Float = 200;
 	
 	public static var ARM_COLOR:Int = 0xffFFD08A;
@@ -95,6 +96,11 @@ class Player extends FlxSprite
 			Reg.state.add(new DeathEmitter(this));
 			
 			Score.saveScore();
+			
+			if (Score.s > Score.sBest)
+				Sound.playHighscore();
+			else
+				Sound.playDeath();
 		}
 		
 		alive = false;

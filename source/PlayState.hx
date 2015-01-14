@@ -24,6 +24,7 @@ import score.ScoreBestText;
 import score.Score;
 import score.ScoreIndicator;
 import score.ScoreText;
+import sfx.Sound;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -82,7 +83,8 @@ class PlayState extends FlxState
 	
 	private function onPressed(D:DragNRelease):Void
 	{
-		
+		if (p.alive)
+			Sound.playStretch();
 	}
 	
 	private function onReleased(D:DragNRelease):Void
@@ -94,6 +96,10 @@ class PlayState extends FlxState
 			else
 				p.velocity.y = -D.delta.y * Player.JUMPVEL / 40.0;
 			p.velocity.x = -D.delta.x * Player.XVEL / 40.0;
+			
+			flood.firstJump = false;
+			
+			Sound.playJump();
 		}
 	}
 	

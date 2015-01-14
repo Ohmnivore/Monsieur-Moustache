@@ -7,6 +7,7 @@ import flash.events.Event;
 import flash.Lib;
 import flixel.FlxGame;
 import flixel.FlxState;
+import sfx.Music;
 
 class Main extends Sprite 
 {
@@ -47,6 +48,7 @@ class Main extends Sprite
 		}
 		
 		setupGame();
+		Music.play();
 	}
 	
 	private function setupGame():Void

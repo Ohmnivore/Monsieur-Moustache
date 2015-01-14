@@ -29,8 +29,9 @@
 	
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
-	<assets path="assets" />
 	<assets path="assets/images" rename="images" include="*.png" />
+	<assets path="assets/music" rename="music" include="*.mp3|*.ogg" />
+	<assets path="assets/sounds" rename="sounds" include="*.mp3|*.ogg" />
 	
 	<!--------------------------------LIBRARIES------------------------------------->
 
