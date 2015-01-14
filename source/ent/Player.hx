@@ -7,6 +7,7 @@ import flixel.FlxSprite;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxPoint;
 import flixel.util.FlxSpriteUtil;
+import score.Score;
 
 /**
  * ...
@@ -15,6 +16,7 @@ import flixel.util.FlxSpriteUtil;
 class Player extends FlxSprite
 {
 	public static var GRAV:Float = 400;
+	//public static var JUMPVEL:Float = 200;
 	public static var JUMPVEL:Float = 200;
 	public static var XVEL:Float = 200;
 	
@@ -88,14 +90,17 @@ class Player extends FlxSprite
 	{
 		if (alive)
 		{
-			FlxG.camera.shake(0.02, 0.5, recenterCam);
+			FlxG.camera.shake(0.01, 0.3, recenterCam);
 			
 			Reg.state.add(new DeathEmitter(this));
+			
+			Score.saveScore();
 		}
 		
 		alive = false;
 		animation.play("dead", true);
 		acceleration.y = 0;
+		velocity.x = 0;
 		velocity.y = -Reg.state.flood.speed;
 		stretch = false;
 	}

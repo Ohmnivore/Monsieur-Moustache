@@ -1,11 +1,13 @@
 package;
 
+import ent.BillBoard;
 import ent.Flood;
 import ent.Player;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.ui.FlxButton;
@@ -18,6 +20,10 @@ import gen.GenTilemap;
 import gen.Platform;
 import inp.DragNRelease;
 import flixel.group.FlxTypedGroup;
+import score.ScoreBestText;
+import score.Score;
+import score.ScoreIndicator;
+import score.ScoreText;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -30,13 +36,22 @@ class PlayState extends FlxState
 	public var canJump:Bool = false;
 	public var flood:Flood;
 	
+	public var backGround:FlxGroup;
+	public var hud:FlxGroup;
+	
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
 		super.create();
+		BillBoard.initPhrases();
+		Score.loadScore();
 		Reg.state = this;
+		
+		backGround = new FlxGroup();
+		add(backGround);
+		
 		cMap = new FlxTypedGroup();
 		add(cMap);
 		var firstMap:GenTilemap = new GenTilemap(0, true);
@@ -55,6 +70,14 @@ class PlayState extends FlxState
 		flood.speed = firstMap.settings.floodSpeed;
 		add(new Blizzard(FlxG.width, FlxG.height, p, flood));
 		add(flood);
+		
+		hud = new FlxGroup();
+		add(hud);
+		
+		hud.add(new ScoreBestText(p));
+		hud.add(new ScoreText(p));
+		if (Score.sBest != 0)
+			hud.add(new ScoreIndicator(Score.sBest));
 	}
 	
 	private function onPressed(D:DragNRelease):Void
@@ -131,6 +154,12 @@ class PlayState extends FlxState
 				n.update();
 				
 				cMap.add(n);
+				
+				if (BillBoard.doDisplay())
+				{
+					var bill:BillBoard = new BillBoard(n.y + n.height - 150);
+					backGround.add(bill);
+				}
 			}
 		}
 		if (p.alive)
