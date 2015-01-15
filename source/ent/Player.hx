@@ -187,7 +187,6 @@ class StretchSprite extends FlxSprite
 	private var FISTLINESTYLE:LineStyle;
 	private var FISTSTYLE:FillStyle;
 	private var DRAWSTYLE:DrawStyle;
-	private var hack:Float = 0;
 	
 	public function new(P:Player)
 	{
@@ -213,17 +212,13 @@ class StretchSprite extends FlxSprite
 			
 			resetFrame();
 			start.y -= FlxG.camera.scroll.y;
-			//if (p.facing == FlxObject.RIGHT)
-				//hack = -1;
-			//else
-				//hack = 0;
+			start.x -= FlxG.camera.scroll.x;
+			
 			end.x /= 2;
 			end.y /= 2;
 			
 			drawArms();
 			drawFists();
-			
-			//setFrame();
 		}
 		else
 		{
@@ -245,11 +240,11 @@ class StretchSprite extends FlxSprite
 	
 	private function drawArms():Void
 	{
-		FlxSpriteUtil.drawLine(this, start.x - p.width / 2 + 2 + hack, start.y - 2,
+		FlxSpriteUtil.drawLine(this, start.x - p.width / 2 + 2, start.y - 2,
 			start.x + end.x - 6, start.y + end.y,
 			ARMSTYLE, DRAWSTYLE);
 		
-		FlxSpriteUtil.drawLine(this, start.x + p.width / 2 - 2 + hack, start.y - 2,
+		FlxSpriteUtil.drawLine(this, start.x + p.width / 2 - 2, start.y - 2,
 			start.x + end.x + 6, start.y + end.y,
 			ARMSTYLE, DRAWSTYLE);
 	}

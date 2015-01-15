@@ -176,9 +176,22 @@ class PlayState extends FlxState
 			}
 		}
 		if (p.alive)
-			FlxG.camera.scroll.y += (p.y - (FlxG.camera.scroll.y + FlxG.height * 0.6)) * 0.04;
+		{
+			if (p.stretch)
+			{
+				FlxG.camera.scroll.y += (p.y - (FlxG.camera.scroll.y + FlxG.height * 0.6 - drag.delta.y * 0.8)) * 0.05;
+				//FlxG.camera.scroll.x += (p.x - (FlxG.camera.scroll.x + FlxG.width / 2.0 + drag.delta.x)) * 0.04;
+			}
+			else
+			{
+				FlxG.camera.scroll.y += (p.y - (FlxG.camera.scroll.y + FlxG.height * 0.6)) * 0.04;
+				//FlxG.camera.scroll.x += (FlxG.width / 2.0 - (FlxG.camera.scroll.x + FlxG.width / 2.0)) * 0.04;
+			}
+		}
 		else
+		{
 			FlxG.camera.scroll.y += (p.y - (FlxG.camera.scroll.y + FlxG.height * 0.80)) * 0.04;
+		}
 		
 		drag.update();
 		if (drag.pressed && p.alive)

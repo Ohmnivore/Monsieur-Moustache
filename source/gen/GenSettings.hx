@@ -33,20 +33,19 @@ class GenSettings
 		
 		getDiff();
 		
-		minTime = 0.33 + 0.10 * diff;
+		minTime = 0.33 - 0.10 * diff;
 		maxTime = 0.67 + 0.05 * diff;
 		
 		minWidth = cast 2 + 2 * invDiff;
 		maxWidth = cast 6 - 2 * diff;
 		
-		minGrav = 1.2 - 0.1 * diff;
-		maxGrav = 1.2 - 0.16 * diff;
+		minGrav = 1.3 - 0.1 * diff;
+		maxGrav = 1.3 - 0.16 * diff;
 		
 		minVelX = 0.1 + 0.2 * diff;
-		maxVelX = 0.4 + 0.2 * diff;
+		maxVelX = 0.2 + 0.2 * diff;
 		
 		floodSpeed = 25.0 + 25.0 * diff2;
-		//floodSpeed = 50;
 	}
 	
 	private function getDiff():Void

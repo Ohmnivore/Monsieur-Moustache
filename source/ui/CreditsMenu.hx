@@ -32,6 +32,13 @@ class CreditsMenu extends FlxSubState
 		add(buch2);
 		add(buchLink);
 		add(back);
+		
+		Tween.tweenToRight(devs);
+		Tween.tweenToLeft(devLink);
+		Tween.tweenToRight(buch1);
+		Tween.tweenToRight(buch2);
+		Tween.tweenToLeft(buchLink);
+		Tween.tweenToRight(back);
 	}
 	
 	private function visitDevs():Void

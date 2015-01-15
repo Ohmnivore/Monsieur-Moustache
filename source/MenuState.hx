@@ -15,6 +15,16 @@ import ui.*;
  */
 class MenuState extends PlayState
 {
+	private var play:BtnPlay;
+	private var credits:BtnWeb;
+	private var title:Title;
+	private var mute:BtnToggle;
+	private var muteDescr:UIText;
+	#if desktop
+	private var fScreen:BtnToggle;
+	private var fScreenDescr:UIText;
+	#end
+	
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -30,35 +40,46 @@ class MenuState extends PlayState
 		
 		hud.clear();
 		
-		var play:BtnPlay = new BtnPlay(FlxG.height / 6.0, launch);
-		var credits:BtnWeb = new BtnWeb(FlxG.height / 6.0 + 42.0, showCredits);
-		var title:Title = new Title(FlxG.height / 6.0 + 42.0 + 52);
-		
-		Tween.tweenToRight(play);
-		Tween.tweenToLeft(credits);
-		Tween.tweenToRight(title);
+		play = new BtnPlay(FlxG.height / 6.0, launch);
+		credits = new BtnWeb(FlxG.height / 6.0 + 42.0, showCredits);
+		title = new Title(FlxG.height / 6.0 + 42.0 + 52);
 		
 		hud.add(play);
 		hud.add(credits);
 		hud.add(title);
 		
-		var mute:BtnToggle = new BtnToggle(1, 1, doMute);
+		mute = new BtnToggle(1, 1, doMute);
 		mute.pressed = loadMute();
 		hud.add(mute);
 		hud.add(mute.click);
-		var muteDescr:UIText = new UIText(mute.x + mute.width, 3, "Mute", 8, 100);
+		muteDescr = new UIText(mute.x + mute.width, 3, "Mute", 8, 100);
 		muteDescr.alignment = "left";
 		hud.add(muteDescr);
 		
 		#if desktop
-		var fScreen:BtnToggle = new BtnToggle(FlxG.width - 19, 1, doFullScreen);
+		fScreen = new BtnToggle(FlxG.width - 19, 1, doFullScreen);
 		fScreen.pressed = loadFullScreen();
 		hud.add(fScreen);
 		hud.add(fScreen.click);
-		var fScreenDescr:UIText = new UIText(fScreen.x - 54, 3, "Fullscreen", 8, 100);
+		fScreenDescr = new UIText(fScreen.x - 54, 3, "Fullscreen", 8, 100);
 		fScreenDescr.alignment = "left";
 		hud.add(fScreenDescr);
 		#end
+		
+		tweenBtns();
+	}
+	
+	private function tweenBtns():Void
+	{
+		Tween.tweenToLeft(mute);
+		Tween.tweenToLeft(muteDescr);
+		#if desktop
+		Tween.tweenToRight(fScreen);
+		Tween.tweenToRight(fScreenDescr);
+		#end
+		Tween.tweenToRight(play);
+		Tween.tweenToLeft(credits);
+		Tween.tweenToRight(title);
 	}
 	
 	private function doMute(Mute:Bool):Void
@@ -139,6 +160,9 @@ class MenuState extends PlayState
 	{
 		hud.visible = Visible;
 		hud.active = Visible;
+		
+		if (Visible)
+			tweenBtns();
 	}
 	
 	override public function update():Void 

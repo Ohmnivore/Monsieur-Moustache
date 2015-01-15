@@ -17,18 +17,32 @@ class GameOverMenu extends FlxSubState
 		
 		if (Score.s > Score.sBest)
 		{
-			add(new UIText(0, 1, "New highscore of " + Score.s + "m!"));
+			var score:UIText = new UIText(0, 1, "New highscore of " + Score.s + "m!");
+			Tween.tweenToLeft(score);
+			add(score);
 		}
 		else
 		{
-			add(new UIText(0, 6, "Score: " + Score.s + "m"));
-			add(new UIText(0, 16, "Highscore: " + Score.sBest + "m"));
+			var score:UIText = new UIText(0, 6, "Score: " + Score.s + "m");
+			Tween.tweenToLeft(score);
+			add(score);
+			var highScore:UIText = new UIText(0, 16, "Highscore: " + Score.sBest + "m");
+			Tween.tweenToLeft(highScore);
+			add(highScore);
 		}
 		Score.saveScore();
 		
-		add(new BtnPlay(FlxG.height / 6.0, launch));
-		add(new BtnTweet(FlxG.height / 6.0 + 42.0, tweet));
-		add(new BtnBack(FlxG.height / 6.0 + 68.0, backToMenu));
+		var play:BtnPlay = new BtnPlay(FlxG.height / 6.0, launch);
+		var tweet:BtnTweet = new BtnTweet(FlxG.height / 6.0 + 42.0, tweet);
+		var back:BtnBack = new BtnBack(FlxG.height / 6.0 + 68.0, backToMenu);
+		
+		add(play);
+		add(tweet);
+		add(back);
+		
+		Tween.tweenToRight(play);
+		Tween.tweenToLeft(tweet);
+		Tween.tweenToRight(back);
 	}
 	
 	override public function update():Void 

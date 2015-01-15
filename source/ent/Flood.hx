@@ -25,7 +25,7 @@ class Flood extends FlxSpriteGroup
 	
 	public function new() 
 	{
-		super(-32, Reg.state.p.y + FlxG.height / 2);
+		super(-48, Reg.state.p.y + FlxG.height / 2);
 		
 		createFrames();
 		createFrameHolder();
@@ -64,7 +64,7 @@ class Flood extends FlxSpriteGroup
 		frameHolder.animation.play(Frame, true);
 		frameHolder.update();
 		
-		Spr.makeGraphic(FlxG.width + 64, FlxG.height, 0xff4B8473, true);
+		Spr.makeGraphic(FlxG.width + 96, FlxG.height, 0xff4B8473, true);
 		Spr.alpha = 0.7;
 		//Spr.blend = flash.display.BlendMode.MULTIPLY;
 		

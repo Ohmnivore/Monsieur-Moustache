@@ -85,4 +85,5 @@
 	
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	<haxedef name="fdb" if="target_flash"/>
+	<icon path="icon/icon.svg" />
 </project>
