@@ -11,6 +11,9 @@ import score.Score;
 import sfx.Sound;
 import social.Twitter;
 import ui.GameOverMenu;
+#if !web
+import util.ArtifactFix;
+#end
 
 /**
  * ...
@@ -23,7 +26,8 @@ class Player extends FlxSprite
 	public static var JUMPVEL:Float = 280;
 	public static var XVEL:Float = 200;
 	
-	public static var ARM_COLOR:Int = 0xffFFD08A;
+	public static var FIST_COLOR:Int = 0xffFFD08A;
+	public static var ARM_COLOR:Int = 0xff21302E;
 	
 	public var stretchDest:FlxPoint;
 	public var stretch:Bool = false;
@@ -33,11 +37,20 @@ class Player extends FlxSprite
 	{
 		super(X, Y);
 		
-		loadGraphic("images/kman.png", true, 16, 16, true);
+		//loadGraphic("images/kman.png", true, 16, 16, true);
+		//loadGraphic("images/kman3.png", true, 12, 24, true);
+		#if web
+		loadGraphic("images/kman4.png", true, 12, 24, true);
+		#else
+		loadGraphic(ArtifactFix.artefactFix("images/kman4.png", 12, 24), true, 12, 24, true);
+		#end
 		
+		//animation.add("idle", [0, 1], 2, true);
+		//animation.add("stretch", [8], 30, false);
+		//animation.add("dead", [9], 30, false);
 		animation.add("idle", [0, 1], 2, true);
-		animation.add("stretch", [8], 30, false);
-		animation.add("dead", [9], 30, false);
+		animation.add("stretch", [2], 30, false);
+		animation.add("dead", [3], 30, false);
 		animation.play("idle");
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		setFacingFlip(FlxObject.LEFT, true, false);
@@ -49,7 +62,7 @@ class Player extends FlxSprite
 		height = 8;
 		offset.y = frameHeight - 8;
 		width = 8;
-		offset.x = frameHeight - 12;
+		offset.x = 2;
 		
 		stretchDest = new FlxPoint();
 		stretchSpr = new StretchSprite(this);
@@ -86,6 +99,9 @@ class Player extends FlxSprite
 			animation.play("idle");
 		}
 		
+		if (!alive)
+			onDeath();
+		
 		super.update();
 	}
 	
@@ -106,6 +122,7 @@ class Player extends FlxSprite
 			
 			Reg.state.hud.clear();
 			Reg.state.openSubState(new GameOverMenu());
+			y = Reg.state.flood.y + 7;
 		}
 		
 		alive = false;
@@ -167,6 +184,7 @@ class StretchSprite extends FlxSprite
 	public var end:FlxPoint;
 	
 	private var ARMSTYLE:LineStyle;
+	private var FISTLINESTYLE:LineStyle;
 	private var FISTSTYLE:FillStyle;
 	private var DRAWSTYLE:DrawStyle;
 	private var hack:Float = 0;
@@ -182,7 +200,8 @@ class StretchSprite extends FlxSprite
 		end = new FlxPoint();
 		
 		ARMSTYLE = { thickness: 1, pixelHinting:false, color: Player.ARM_COLOR };
-		FISTSTYLE = { hasFill:true, color: Player.ARM_COLOR };
+		FISTLINESTYLE = { thickness: 1, pixelHinting:false, color: Player.FIST_COLOR };
+		FISTSTYLE = { hasFill:true, color: Player.FIST_COLOR };
 		DRAWSTYLE = { smoothing: false };
 	}
 	
@@ -194,10 +213,10 @@ class StretchSprite extends FlxSprite
 			
 			resetFrame();
 			start.y -= FlxG.camera.scroll.y;
-			if (p.facing == FlxObject.RIGHT)
-				hack = -1;
-			else
-				hack = 0;
+			//if (p.facing == FlxObject.RIGHT)
+				//hack = -1;
+			//else
+				//hack = 0;
 			end.x /= 2;
 			end.y /= 2;
 			
@@ -238,10 +257,10 @@ class StretchSprite extends FlxSprite
 	{
 		FlxSpriteUtil.drawRect(this, start.x + end.x - 6 - 1, start.y + end.y - 1,
 			2, 2,
-			Player.ARM_COLOR, ARMSTYLE, FISTSTYLE, DRAWSTYLE);
+			Player.FIST_COLOR, FISTLINESTYLE, FISTSTYLE, DRAWSTYLE);
 		
 		FlxSpriteUtil.drawRect(this, start.x + end.x + 6 - 1, start.y + end.y - 1,
 			2, 2,
-			Player.ARM_COLOR, ARMSTYLE, FISTSTYLE, DRAWSTYLE);
+			Player.FIST_COLOR, FISTLINESTYLE, FISTSTYLE, DRAWSTYLE);
 	}
 }

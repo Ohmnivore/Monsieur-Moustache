@@ -20,7 +20,7 @@ class ScoreText extends FlxText
 		scrollFactor.set();
 		Score.setTextStyle(this);
 		
-		y = 1 + 1 + height;
+		y = 1 + 1 + 8;
 	}
 	
 	override public function update():Void 

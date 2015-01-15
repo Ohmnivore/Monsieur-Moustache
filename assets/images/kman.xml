@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<data>
-	<opt bgColor="0xff000000" scale="4" />
-	<img src="kman.psd" width="16" height="16" />
-	<anim name="idle" rate="2" loop="true" frames="0, 1" />
-	<anim name="walk" rate="12" loop="true" frames="3, 2, 3, 4" />
-	<anim name="jump" rate="12" loop="true" frames="5, 6, 7" />
-</data>

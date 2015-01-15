@@ -66,8 +66,8 @@ class PlayState extends FlxState
 		FlxG.camera.scroll.x = 0;
 		
 		p = new Player(firstMap.first.x - 4, firstMap.first.y - 32);
-		add(p);
 		add(p.stretchSpr);
+		add(p);
 		
 		drag = new DragNRelease(onPressed, onReleased);
 		

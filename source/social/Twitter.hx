@@ -33,6 +33,6 @@ class Twitter
 	}
 	static private function getHashtag():String
 	{
-		return "&hashtags=" + Title.TITLE.toLowerCase();
+		return "&hashtags=" + Title.TITLE.toLowerCase().split(" ").join("_");
 	}
 }

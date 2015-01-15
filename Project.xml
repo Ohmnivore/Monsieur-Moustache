@@ -14,7 +14,7 @@
 	<!--------------------------------WINDOW SETTINGS------------------------------->
 	
 	<!--These window settings apply to all targets-->
-	<window width="320" height="480" fps="60" background="#FFFFFF" hardware="true" vsync="true" />
+	<window width="320" height="480" fps="60" background="#000000" hardware="true" vsync="true" />
 	
 	<!--Web-specific-->
 	<window if="web" orientation="portrait"  />
@@ -34,7 +34,10 @@
 	<assets path="assets/sounds" rename="sounds" include="*.mp3|*.ogg" />
 	
 	<!--------------------------------LIBRARIES------------------------------------->
-
+	
+	<!--<set name="no-custom-backend" />-->
+	<!--<haxelib name="openfl-bitfive"/>-->
+	
 	<haxelib name="flixel"/>
 	
 	<!--In case you want to use the addons package-->

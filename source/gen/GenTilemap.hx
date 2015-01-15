@@ -6,6 +6,9 @@ import flixel.FlxObject;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRandom;
+#if !web
+import util.ArtifactFix;
+#end
 
 /**
  * ...
@@ -34,7 +37,14 @@ class GenTilemap extends FlxTilemap
 		initData();
 		loadTiles();
 		tempData = Beautify.getBeautiful(tempData, widthInTiles);
+		
+		#if web
 		loadMap(tempData, "images/tiles.png", TILESIZE, TILESIZE, FlxTilemap.OFF, 0, 1, 1);
+		#else
+		loadMap(tempData, ArtifactFix.artefactFix("images/tiles.png", TILESIZE, TILESIZE),
+			TILESIZE, TILESIZE, FlxTilemap.OFF, 0, 1, 1);
+		tileScaleHack = 1.03;
+		#end
 		
 		setTileProperties(Beautify.BARREL_BOT, FlxObject.NONE);
 		setTileProperties(Beautify.BARREL_TOP, FlxObject.NONE);

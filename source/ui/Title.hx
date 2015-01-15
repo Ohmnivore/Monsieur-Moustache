@@ -9,11 +9,12 @@ import flixel.FlxG;
  */
 class Title extends FlxText
 {
-	public static var TITLE:String = "Elasticate";
+	public static var TITLE:String = "Monsieur Moustache";
 	
 	public function new(Y:Float) 
 	{
-		super(0, Y, 0, TITLE, 16);
+		super(0, Y, FlxG.width - 2, TITLE, 16);
+		alignment = "center";
 		
 		x = (FlxG.width - width) / 2.0;
 		scrollFactor.set();

@@ -24,7 +24,7 @@ class BtnToggle extends FlxSprite
 		animation.add("off", [1], 30, false);
 		animation.add("on", [0], 30, false);
 		animation.play("off", true);
-		click = new FlxClickArea(0, 0, 18, 18, toggle);
+		click = new FlxClickArea(X, Y, 18, 18, toggle);
 		click.scrollFactor.set();
 	}
 	

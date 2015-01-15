@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.system.scaleModes.RatioScaleMode;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
@@ -20,6 +21,9 @@ class MenuState extends PlayState
 	override public function create():Void
 	{
 		super.create();
+		
+		FlxG.mouse.load("images/uiCursor.png", 2, 5);
+		FlxG.scaleMode = new RatioScaleMode();
 		
 		p.visible = false;
 		p.stretchSpr.visible = false;
@@ -42,9 +46,19 @@ class MenuState extends PlayState
 		mute.pressed = loadMute();
 		hud.add(mute);
 		hud.add(mute.click);
-		var muteDescr:UIText = new UIText(mute.x + mute.width + 1, 3, "Mute", 8, 100);
+		var muteDescr:UIText = new UIText(mute.x + mute.width, 3, "Mute", 8, 100);
 		muteDescr.alignment = "left";
 		hud.add(muteDescr);
+		
+		#if desktop
+		var fScreen:BtnToggle = new BtnToggle(FlxG.width - 19, 1, doFullScreen);
+		fScreen.pressed = loadFullScreen();
+		hud.add(fScreen);
+		hud.add(fScreen.click);
+		var fScreenDescr:UIText = new UIText(fScreen.x - 54, 3, "Fullscreen", 8, 100);
+		fScreenDescr.alignment = "left";
+		hud.add(fScreenDescr);
+		#end
 	}
 	
 	private function doMute(Mute:Bool):Void
@@ -77,6 +91,38 @@ class MenuState extends PlayState
 		
 		return false;
 	}
+	#if desktop
+	private function doFullScreen(Full:Bool):Void
+	{
+		FlxG.fullscreen = Full;
+		
+		FlxG.save.bind("Elasticate");
+		FlxG.save.data.fscreen = Full;
+		FlxG.save.close();
+	}
+	private function loadFullScreen():Bool
+	{
+		FlxG.save.bind("Elasticate");
+		if (FlxG.save.data.fscreen == null)
+		{
+			FlxG.fullscreen = false;
+			
+			return false;
+		}
+		else
+		{
+			if (FlxG.save.data.fscreen == true)
+			{
+				FlxG.fullscreen = true;
+				
+				return true;
+			}
+		}
+		FlxG.save.close();
+		
+		return false;
+	}
+	#end
 	
 	private function launch():Void
 	{
