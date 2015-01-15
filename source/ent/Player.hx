@@ -32,6 +32,7 @@ class Player extends FlxSprite
 	public var stretchDest:FlxPoint;
 	public var stretch:Bool = false;
 	public var stretchSpr:StretchSprite;
+	public var stretchHack:Int = 0;
 	
 	public function new(X:Float, Y:Float) 
 	{
@@ -90,6 +91,7 @@ class Player extends FlxSprite
 			animation.play("stretch", true);
 			
 			var mid:FlxPoint = getMidpoint();
+			stretchHack++;
 			stretchSpr.start.copyFrom(mid);
 			stretchSpr.end.x = stretchDest.x;
 			stretchSpr.end.y = stretchDest.y;
@@ -97,7 +99,14 @@ class Player extends FlxSprite
 		else
 		{
 			animation.play("idle");
+			
+			stretchHack = 0;
 		}
+		
+		if (stretch && stretchHack > 1)
+			stretchSpr.alpha = 1.0;
+		else
+			stretchSpr.alpha = 0.0;
 		
 		if (!alive)
 			onDeath();
@@ -208,8 +217,6 @@ class StretchSprite extends FlxSprite
 	{
 		if (p.stretch)
 		{
-			alpha = 1.0;
-			
 			resetFrame();
 			start.y -= FlxG.camera.scroll.y;
 			start.x -= FlxG.camera.scroll.x;
@@ -219,10 +226,6 @@ class StretchSprite extends FlxSprite
 			
 			drawArms();
 			drawFists();
-		}
-		else
-		{
-			alpha = 0;
 		}
 		
 		super.update();

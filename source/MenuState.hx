@@ -8,6 +8,7 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import inp.DragNRelease;
+import social.Facebook;
 import ui.*;
 
 /**

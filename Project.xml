@@ -2,7 +2,8 @@
 <project>
 	<!------------------------------APPLICATION SETTINGS---------------------------->
 	
-	<app title="Elasticate" file="Elasticate" main="Main" version="0.0.1" company="4AM Games" />
+	<app title="Monsieur Moustache" file="Monsieur_Moustache" main="Main" version="0.0.1" company="4AM Games" />
+	<app if="android" package="com.fouramgames.monsieurmoustache" />
 	
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 	<!--or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"!-->
@@ -14,7 +15,7 @@
 	<!--------------------------------WINDOW SETTINGS------------------------------->
 	
 	<!--These window settings apply to all targets-->
-	<window width="320" height="480" fps="60" background="#000000" hardware="true" vsync="true" />
+	<window width="320" height="480" fps="48" background="#000000" hardware="true" vsync="true" />
 	
 	<!--Web-specific-->
 	<window if="web" orientation="portrait"  />
@@ -23,22 +24,26 @@
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" />
 	
 	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" />
+	<window if="mobile" orientation="portrait" fullscreen="true" width="320" height="480" />
 	
 	<!--------------------------------PATHS SETTINGS-------------------------------->
 	
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
 	<assets path="assets/images" rename="images" include="*.png" />
-	<assets path="assets/music" rename="music" include="*.mp3|*.ogg" />
-	<assets path="assets/sounds" rename="sounds" include="*.mp3|*.ogg" />
+	<assets if="flash" path="assets/music" rename="music" include="*.mp3" />
+	<assets unless="flash" path="assets/music" rename="music" include="*.ogg" />
+	<assets if="flash" path="assets/sounds" rename="sounds" include="*.mp3" />
+	<assets unless="flash" path="assets/sounds" rename="sounds" include="*.ogg" />
 	
 	<!--------------------------------LIBRARIES------------------------------------->
 	
 	<!--<set name="no-custom-backend" />-->
 	<!--<haxelib name="openfl-bitfive"/>-->
 	
-	<haxelib name="flixel"/>
+	<haxelib name="flixel" />
+	
+	<haxelib name="dconsole" if="flash" />
 	
 	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />
@@ -55,16 +60,16 @@
 	<!--haxedef name="FLX_RECORD" /-->
 	
 	<!--Disable the right and middle mouse buttons-->
-	<!--haxedef name="FLX_NO_MOUSE_ADVANCED" /-->
+	<haxedef name="FLX_NO_MOUSE_ADVANCED" />
 	
 	<!--Disable the Native cursor api for Flash target-->
-	<!--haxedef name="FLX_NO_NATIVE_CURSOR" /-->
+	<haxedef name="FLX_NO_NATIVE_CURSOR" />
 	
 	<!--Optimise inputs, be careful you will get null errors if you don't use conditionals in your game-->
 	<!--haxedef name="FLX_NO_MOUSE" if="mobile" /-->
 	<!--haxedef name="FLX_NO_KEYBOARD" if="mobile" /-->
-	<!--haxedef name="FLX_NO_TOUCH" if="desktop" /-->
-	<!--haxedef name="FLX_NO_GAMEPAD" /-->
+	<haxedef name="FLX_NO_TOUCH" if="desktop" />
+	<haxedef name="FLX_NO_GAMEPAD" />
 	
 	<!--Disable the Flixel core sound tray-->
 	<!--haxedef name="FLX_NO_SOUND_TRAY" /-->
@@ -86,4 +91,7 @@
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	<haxedef name="fdb" if="target_flash"/>
 	<icon path="icon/icon.svg" />
+	<!--<icon path="icon/icon.png" />-->
+	<android install-location="preferExternal" />
+	<template path="AndroidManifest.xml" rename="AndroidManifest.xml" if="android"/>
 </project>

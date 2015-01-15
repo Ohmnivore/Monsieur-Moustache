@@ -3,6 +3,7 @@ package ui;
 import flixel.FlxSubState;
 import flixel.FlxG;
 import score.Score;
+import social.Facebook;
 import social.Twitter;
 
 /**
@@ -33,16 +34,19 @@ class GameOverMenu extends FlxSubState
 		Score.saveScore();
 		
 		var play:BtnPlay = new BtnPlay(FlxG.height / 6.0, launch);
-		var tweet:BtnTweet = new BtnTweet(FlxG.height / 6.0 + 42.0, tweet);
-		var back:BtnBack = new BtnBack(FlxG.height / 6.0 + 68.0, backToMenu);
+		var tweet:BtnTweet = new BtnTweet(FlxG.height / 6.0 + 42.0, shareTweet);
+		var fb:BtnFacebook = new BtnFacebook(FlxG.height / 6.0 + 68.0, shareFacebook);
+		var back:BtnBack = new BtnBack(FlxG.height / 6.0 + 94.0, backToMenu);
 		
 		add(play);
 		add(tweet);
+		add(fb);
 		add(back);
 		
 		Tween.tweenToRight(play);
 		Tween.tweenToLeft(tweet);
-		Tween.tweenToRight(back);
+		Tween.tweenToRight(fb);
+		Tween.tweenToLeft(back);
 	}
 	
 	override public function update():Void 
@@ -57,11 +61,17 @@ class GameOverMenu extends FlxSubState
 	{
 		FlxG.switchState(new PlayState());
 	}
-	private function tweet():Void
+	private function shareTweet():Void
 	{
 		Util.blip();
 		
 		Twitter.tweetScore(Score.s);
+	}
+	private function shareFacebook():Void
+	{
+		Util.blip();
+		
+		Facebook.shareScore(Score.s);
 	}
 	private function backToMenu():Void
 	{

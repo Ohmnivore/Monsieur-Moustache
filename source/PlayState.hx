@@ -28,6 +28,8 @@ import sfx.Sound;
 import ui.Hint;
 import ui.Util;
 
+import pgr.dconsole.DC;
+
 /**
  * A FlxState which can be used for the actual gameplay.
  */
@@ -84,6 +86,8 @@ class PlayState extends FlxState
 		hud.add(new ScoreText(p));
 		if (Score.sBest != 0)
 			hud.add(new ScoreIndicator(Score.sBest));
+		
+		DC.init();
 	}
 	
 	private function onPressed(D:DragNRelease):Void
@@ -138,6 +142,7 @@ class PlayState extends FlxState
 		#end
 		
 		var highest:GenTilemap = cMap.getFirstExisting();
+		DC.beginProfile("Collide");
 		for (map in cMap.members)
 		{
 			if (p.y + FlxG.height / 2 < map.y)
@@ -158,21 +163,12 @@ class PlayState extends FlxState
 				}
 			}
 		}
+		DC.endProfile("Collide");
 		if (highest != null)
 		{
 			if (p.y - FlxG.height / 1.5 <= highest.y)
 			{
-				var n:GenTilemap = new GenTilemap(highest.y - FlxG.height * 2);
-				flood.speed = n.settings.floodSpeed;
-				n.update();
-				
-				cMap.add(n);
-				
-				if (BillBoard.doDisplay())
-				{
-					var bill:BillBoard = new BillBoard(n.y + n.height - 150);
-					backGround.add(bill);
-				}
+				addNewMap(highest);
 			}
 		}
 		if (p.alive)
@@ -206,6 +202,20 @@ class PlayState extends FlxState
 		}
 		
 		super.update();
+	}
+	private function addNewMap(Highest:GenTilemap):Void
+	{
+		var n:GenTilemap = new GenTilemap(Highest.y - FlxG.height * 2);
+		flood.speed = n.settings.floodSpeed;
+		n.update();
+		
+		cMap.add(n);
+		
+		if (BillBoard.doDisplay())
+		{
+			var bill:BillBoard = new BillBoard(n.y + n.height - 150);
+			backGround.add(bill);
+		}
 	}
 	
 	private function updateMap(M:GenTilemap):Void
