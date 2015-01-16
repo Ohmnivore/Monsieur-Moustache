@@ -32,6 +32,38 @@ class DragNRelease
 	
 	public function update():Void
 	{
+		#if mobile
+		if (FlxG.touches.justStarted().length > 0)
+		{
+			pressed = true;
+			
+			FlxG.touches.getFirst().getScreenPosition().copyTo(startPoint);
+			
+			if (onPressed != null)
+				onPressed(this);
+		}
+		
+		if (FlxG.touches.justReleased().length > 0)
+		{
+			pressed = false;
+			
+			if (onReleased != null)
+				onReleased(this);
+		}
+		
+		if (pressed)
+		{
+			FlxG.touches.getFirst().getScreenPosition().copyTo(endPoint);
+			delta.x = endPoint.x - startPoint.x;
+			delta.y = endPoint.y - startPoint.y;
+			
+			if (delta.length > MAXDRAG)
+			{
+				delta = delta.normalize();
+				delta = delta.scale(MAXDRAG);
+			}
+		}
+		#else
 		if (FlxG.mouse.justPressed)
 		{
 			pressed = true;
@@ -62,5 +94,6 @@ class DragNRelease
 				delta = delta.scale(MAXDRAG);
 			}
 		}
+		#end
 	}
 }

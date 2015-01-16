@@ -2,7 +2,6 @@
 
 * Optimize:
  * Thread for new GenTilemap generation
- * Use dconsole to find issues
 
 * Graphics:
  * Figure out stretching animation

@@ -28,7 +28,7 @@ import sfx.Sound;
 import ui.Hint;
 import ui.Util;
 
-import pgr.dconsole.DC;
+//import pgr.dconsole.DC;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -87,7 +87,7 @@ class PlayState extends FlxState
 		if (Score.sBest != 0)
 			hud.add(new ScoreIndicator(Score.sBest));
 		
-		DC.init();
+		//DC.init();
 	}
 	
 	private function onPressed(D:DragNRelease):Void
@@ -142,7 +142,7 @@ class PlayState extends FlxState
 		#end
 		
 		var highest:GenTilemap = cMap.getFirstExisting();
-		DC.beginProfile("Collide");
+		//DC.beginProfile("Collide");
 		for (map in cMap.members)
 		{
 			if (p.y + FlxG.height / 2 < map.y)
@@ -163,7 +163,7 @@ class PlayState extends FlxState
 				}
 			}
 		}
-		DC.endProfile("Collide");
+		//DC.endProfile("Collide");
 		if (highest != null)
 		{
 			if (p.y - FlxG.height / 1.5 <= highest.y)

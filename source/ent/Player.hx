@@ -192,6 +192,8 @@ class StretchSprite extends FlxSprite
 	public var start:FlxPoint;
 	public var end:FlxPoint;
 	
+	private var _start:FlxPoint;
+	private var _end:FlxPoint;
 	private var ARMSTYLE:LineStyle;
 	private var FISTLINESTYLE:LineStyle;
 	private var FISTSTYLE:FillStyle;
@@ -202,10 +204,12 @@ class StretchSprite extends FlxSprite
 		super(0, 0);
 		p = P;
 		makeGraphic(FlxG.width, FlxG.height, TRANSPARENT, true);
-		scrollFactor.set();
+		//scrollFactor.set();
 		
 		start = new FlxPoint();
 		end = new FlxPoint();
+		_start = new FlxPoint();
+		_end = new FlxPoint();
 		
 		ARMSTYLE = { thickness: 1, pixelHinting:false, color: Player.ARM_COLOR };
 		FISTLINESTYLE = { thickness: 1, pixelHinting:false, color: Player.FIST_COLOR };
@@ -218,11 +222,6 @@ class StretchSprite extends FlxSprite
 		if (p.stretch)
 		{
 			resetFrame();
-			start.y -= FlxG.camera.scroll.y;
-			start.x -= FlxG.camera.scroll.x;
-			
-			end.x /= 2;
-			end.y /= 2;
 			
 			drawArms();
 			drawFists();
@@ -233,31 +232,41 @@ class StretchSprite extends FlxSprite
 	
 	private function resetFrame():Void
 	{
+		end.x /= 2.0;
+		end.y /= 2.0;
+		
 		x = 0;
 		y = 0;
-		width = FlxG.width;
-		height = FlxG.height;
+		x = (start.x < start.x + end.x)? start.x - 8 : start.x + end.x - 8;
+		y = (start.y < start.y + end.y)? start.y - 8 : start.y + end.y - 8;
+		width = Math.abs(end.x) + 16;
+		height = Math.abs(end.y) + 16;
+		
+		_start.x = start.x - x;
+		_start.y = start.y - y;
+		_end.x = _start.x + end.x;
+		_end.y = _start.y + end.y;
 		
 		FlxSpriteUtil.fill(this, TRANSPARENT);
 	}
 	
 	private function drawArms():Void
 	{
-		FlxSpriteUtil.drawLine(this, start.x - p.width / 2 + 2, start.y - 2,
-			start.x + end.x - 6, start.y + end.y,
+		FlxSpriteUtil.drawLine(this, _start.x - p.width / 2 + 2, _start.y - 2,
+			_end.x - 6, _end.y,
 			ARMSTYLE, DRAWSTYLE);
 		
-		FlxSpriteUtil.drawLine(this, start.x + p.width / 2 - 2, start.y - 2,
-			start.x + end.x + 6, start.y + end.y,
+		FlxSpriteUtil.drawLine(this, _start.x + p.width / 2 - 2, _start.y - 2,
+			_end.x + 6, _end.y,
 			ARMSTYLE, DRAWSTYLE);
 	}
 	private function drawFists():Void
 	{
-		FlxSpriteUtil.drawRect(this, start.x + end.x - 6 - 1, start.y + end.y - 1,
+		FlxSpriteUtil.drawRect(this, _end.x - 6 - 1, _end.y - 1,
 			2, 2,
 			Player.FIST_COLOR, FISTLINESTYLE, FISTSTYLE, DRAWSTYLE);
 		
-		FlxSpriteUtil.drawRect(this, start.x + end.x + 6 - 1, start.y + end.y - 1,
+		FlxSpriteUtil.drawRect(this, _end.x + 6 - 1, _end.y - 1,
 			2, 2,
 			Player.FIST_COLOR, FISTLINESTYLE, FISTSTYLE, DRAWSTYLE);
 	}

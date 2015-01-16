@@ -8,6 +8,7 @@ import flash.Lib;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
+import flixel.system.scaleModes.RatioScaleMode;
 import sfx.Music;
 
 class Main extends Sprite 
@@ -15,7 +16,11 @@ class Main extends Sprite
 	var gameWidth:Int = 160; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var gameHeight:Int = 240; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var initialState:Class<FlxState> = MenuState; // The FlxState the game starts with.
+	#if flash
+	var zoom:Float = 2;
+	#else
 	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
+	#end
 	var framerate:Int = 48; // How many frames per second the game should run at.
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
@@ -50,6 +55,7 @@ class Main extends Sprite
 		
 		setupGame();
 		Music.play();
+		FlxG.scaleMode = new RatioScaleMode();
 	}
 	
 	private function setupGame():Void
