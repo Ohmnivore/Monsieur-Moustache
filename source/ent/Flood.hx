@@ -99,6 +99,9 @@ class Flood extends FlxSpriteGroup
 		
 		if (Reg.state.p.y > y + 8)
 		{
+			firstJump = false;
+			velocity.y = -speed;
+			
 			Reg.state.p.onDeath();
 		}
 		

@@ -33,7 +33,9 @@ class MenuState extends PlayState
 	{
 		super.create();
 		
+		#if !mobile
 		FlxG.mouse.load("images/uiCursor.png", 2, 5);
+		#end
 		FlxG.scaleMode = new RatioScaleMode();
 		
 		p.visible = false;

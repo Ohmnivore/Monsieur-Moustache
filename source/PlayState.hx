@@ -205,7 +205,7 @@ class PlayState extends FlxState
 	}
 	private function addNewMap(Highest:GenTilemap):Void
 	{
-		var n:GenTilemap = new GenTilemap(Highest.y - FlxG.height * 2);
+		var n:GenTilemap = new GenTilemap(Highest.y - FlxG.height * 2, false, GenTilemap.lastPl);
 		flood.speed = n.settings.floodSpeed;
 		n.update();
 		

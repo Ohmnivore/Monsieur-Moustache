@@ -19,11 +19,12 @@ class GenTilemap extends FlxTilemap
 	static public var TILESIZE:Int = 8;
 	
 	public var first:FlxPoint;
+	public static var lastPl:FlxPoint;
 	public var settings:GenSettings;
 	
 	private var tempData:Array<Int> = [];
 	
-	public function new(Y:Float, Reset:Bool = false) 
+	public function new(Y:Float, Reset:Bool = false, LastPoint:FlxPoint = null) 
 	{
 		super();
 		
@@ -35,7 +36,7 @@ class GenTilemap extends FlxTilemap
 		FlxG.worldBounds.set(0, Y - 16, FlxG.width, FlxG.height * 5);
 		
 		initData();
-		loadTiles();
+		loadTiles(LastPoint);
 		tempData = Beautify.getBeautiful(tempData, widthInTiles);
 		
 		#if web
@@ -110,13 +111,37 @@ class GenTilemap extends FlxTilemap
 		}
 	}
 	
-	private function loadTiles():Void
+	private function loadTiles(LastPoint:FlxPoint = null):Void
 	{
-		var lastSpawn:FlxPoint = new FlxPoint(widthInTiles / 2, heightInTiles - 2);
-		addPlatform(cast lastSpawn.x - 2, cast lastSpawn.y, widthInTiles - 2);
-		first = new FlxPoint(lastSpawn.x * TILESIZE, lastSpawn.y * TILESIZE);
+		var lastSpawn:FlxPoint = new FlxPoint();
 		
-		while (lastSpawn.y > 3)
+		if (LastPoint == null)
+		{
+			lastSpawn = new FlxPoint(widthInTiles / 2, heightInTiles - 2);
+			addPlatform(cast lastSpawn.x - 2, cast lastSpawn.y, widthInTiles - 2);
+			first = new FlxPoint(lastSpawn.x * TILESIZE, lastSpawn.y * TILESIZE);
+		}
+		else
+		{
+			lastSpawn = Platform.getNew(new FlxPoint(LastPoint.x * TILESIZE, LastPoint.y * TILESIZE + heightInTiles * TILESIZE),
+				-Player.JUMPVEL, Player.XVEL, Player.GRAV, settings);
+			//lastSpawn.y += FlxG.height * 2.0;
+			//addPlatform(cast lastSpawn.x / TILESIZE, cast lastSpawn.y / TILESIZE, widthInTiles - 2);
+			first = new FlxPoint(lastSpawn.x / TILESIZE, lastSpawn.y / TILESIZE);
+			lastSpawn.x /= TILESIZE;
+			lastSpawn.y /= TILESIZE;
+			
+			if (lastSpawn.y > heightInTiles - 2)
+			{
+				y += (lastSpawn.y - (heightInTiles - 2)) * TILESIZE;
+				
+				lastSpawn.y = heightInTiles - 2;
+			}
+			
+			addPlatform(cast lastSpawn.x, cast lastSpawn.y, widthInTiles - 2);
+		}
+		
+		while (lastSpawn.y > 2)
 		{
 			var newSpawn:FlxPoint = Platform.getNew(new FlxPoint(lastSpawn.x * TILESIZE, lastSpawn.y * TILESIZE),
 				-Player.JUMPVEL, Player.XVEL, Player.GRAV, settings);
@@ -127,12 +152,16 @@ class GenTilemap extends FlxTilemap
 			if (newSpawn.x < 1)
 				newSpawn.x = 1;
 			
-			var w:Int = FlxRandom.intRanged(settings.minWidth, settings.maxWidth);
-			if (w == 1)
-				setDataTile(cast newSpawn.x, cast newSpawn.y, 1);
-			else
+			if (newSpawn.y > 2)
 			{
-				addPlatform(cast newSpawn.x, cast newSpawn.y, w);
+				var w:Int = FlxRandom.intRanged(settings.minWidth, settings.maxWidth);
+				if (w == 1)
+					setDataTile(cast newSpawn.x, cast newSpawn.y, 1);
+				else
+				{
+					addPlatform(cast newSpawn.x, cast newSpawn.y, w);
+				}
+				lastPl = newSpawn;
 			}
 			
 			lastSpawn = newSpawn;

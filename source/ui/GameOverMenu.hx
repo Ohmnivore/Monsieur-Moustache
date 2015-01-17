@@ -51,8 +51,10 @@ class GameOverMenu extends FlxSubState
 	
 	override public function update():Void 
 	{
+		#if !mobile
 		if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE)
 			launch();
+		#end
 		
 		super.update();
 	}

@@ -10,7 +10,7 @@ import ui.Title;
 class Facebook
 {
 	static private var APPID:String = "145634995501895";
-	static private var LINK:String = "https://www.youtube.com/watch?v=Muh1pk7xc2k";
+	static private var LINK:String = "https://www.facebook.com/4amgames";
 	
 	static public function shareScore(S:Int):Void
 	{
