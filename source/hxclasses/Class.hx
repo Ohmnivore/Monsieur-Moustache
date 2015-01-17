@@ -1,0 +1,1 @@
+@:coreType @:runtimeValue abstract Class<T> {}

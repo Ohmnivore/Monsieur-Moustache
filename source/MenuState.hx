@@ -1,5 +1,6 @@
 package;
 
+import biz.SiteLock;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -43,6 +44,35 @@ class MenuState extends PlayState
 		
 		hud.clear();
 		
+		#if flash
+		if (SiteLock.shouldLock())
+			doLock();
+		else
+			addBtns();
+		#else
+		addBtns();
+		#end
+	}
+	
+	private function doLock():Void
+	{
+		var warning:UIText = new UIText(0, FlxG.height / 6.0, "Please play the game on the", 8, 0);
+		var warning2:UIText = new UIText(0, FlxG.height / 6.0 + 9, "publisher's official website, here:", 8, 0);
+		
+		var redirect:BtnMedium = new BtnMedium(0, "Visit", SiteLock.takeToSite);
+		redirect.y = warning2.y + warning2.height + 1;
+		
+		hud.add(warning);
+		hud.add(warning2);
+		hud.add(redirect);
+		
+		Tween.tweenToRight(warning);
+		Tween.tweenToRight(warning2);
+		Tween.tweenToLeft(redirect);
+	}
+	
+	private function addBtns():Void
+	{
 		play = new BtnPlay(FlxG.height / 6.0, launch);
 		credits = new BtnWeb(FlxG.height / 6.0 + 42.0, showCredits);
 		title = new Title(FlxG.height / 6.0 + 42.0 + 52);

@@ -1,6 +1,5 @@
 package;
 
-import biz.MonsieurMoustacheAds;
 import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
@@ -11,6 +10,9 @@ import flixel.FlxGame;
 import flixel.FlxState;
 import flixel.system.scaleModes.RatioScaleMode;
 import sfx.Music;
+#if flash
+import FGLAds;
+#end
 
 class Main extends Sprite 
 {
@@ -57,6 +59,15 @@ class Main extends Sprite
 		setupGame();
 		Music.play();
 		FlxG.scaleMode = new RatioScaleMode();
+		
+		#if flash
+		var ads = new FGLAds(stage, "FGL-20030008");
+		ads.addEventListener(FGLAds.EVT_API_READY,
+		function (e:Event):Void 
+		{
+			ads.showAdPopup(); 
+		});
+		#end
 	}
 	
 	private function setupGame():Void

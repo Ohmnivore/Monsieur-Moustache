@@ -1,0 +1,1 @@
+@:coreType @:notNull @:runtimeValue abstract Float {}

@@ -1,21 +1,20 @@
 * Engine:
 
 * Optimize:
- * Thread for new GenTilemap generation
 
 * Graphics:
- * Figure out stretching animation
+ * Hats
 
 * Feel & Gameplay:
- * More stretch feel -> bouncy top hat
 
 * SFX:
- * Find a better main track (loopable)
+ * Include Felix's tracks
 
 * UI:
+ * Hat select
 
 * Biz:
- * Get a legit website
+ * Mobile ads (AdMob)
  * Compile to iOS
 
 * Haxelib settings for Flash and Windows:

@@ -1,0 +1,1 @@
+typedef Null<T> = T

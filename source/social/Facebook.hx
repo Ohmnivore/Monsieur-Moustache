@@ -9,7 +9,7 @@ import ui.Title;
  */
 class Facebook
 {
-	static private var APPID:String = "145634995501895";
+	static private var APPID:String = "1535775853359478";
 	static private var LINK:String = "https://www.facebook.com/4amgames";
 	
 	static public function shareScore(S:Int):Void
@@ -20,6 +20,7 @@ class Facebook
 		url += getDescription(S);
 		url += getLink();
 		url += getRedirect();
+		url += "&picture=http://fouramgames.com/misc/iconFacebook.png";
 		
 		FlxG.openURL(url);
 	}
@@ -44,7 +45,7 @@ class Facebook
 	}
 	static private function getRedirect():String
 	{
-		return "&redirect_uri=https://developers.facebook.com/tools/explorer";
+		return "&redirect_uri=http://fouramgames.com/";
 	}
 	static private function getDescription(S:Int):String
 	{

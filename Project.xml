@@ -94,4 +94,6 @@
 	<!--<icon path="icon/icon.png" />-->
 	<android install-location="preferExternal" />
 	<template path="AndroidManifest.xml" rename="AndroidManifest.xml" if="android"/>
+	
+	<compilerflag name="-swf-lib Library.swf" if="flash" />
 </project>
