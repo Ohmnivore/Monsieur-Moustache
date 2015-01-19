@@ -96,4 +96,5 @@
 	<template path="AndroidManifest.xml" rename="AndroidManifest.xml" if="android"/>
 	
 	<compilerflag name="-swf-lib Library.swf" if="flash" />
+	<!--<set name="FGLADS" />-->
 </project>

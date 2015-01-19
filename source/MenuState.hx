@@ -19,6 +19,7 @@ class MenuState extends PlayState
 {
 	private var play:BtnPlay;
 	private var credits:BtnWeb;
+	private var customize:BtnCustomize;
 	private var title:Title;
 	private var mute:BtnToggle;
 	private var muteDescr:UIText;
@@ -41,6 +42,7 @@ class MenuState extends PlayState
 		
 		p.visible = false;
 		p.stretchSpr.visible = false;
+		hat.visible = false;
 		
 		hud.clear();
 		
@@ -75,10 +77,12 @@ class MenuState extends PlayState
 	{
 		play = new BtnPlay(FlxG.height / 6.0, launch);
 		credits = new BtnWeb(FlxG.height / 6.0 + 42.0, showCredits);
-		title = new Title(FlxG.height / 6.0 + 42.0 + 52);
+		customize = new BtnCustomize(FlxG.height / 6.0 + 68.0, showCustomize);
+		title = new Title(FlxG.height / 6.0 + 84.0 + 24);
 		
 		hud.add(play);
 		hud.add(credits);
+		hud.add(customize);
 		hud.add(title);
 		
 		mute = new BtnToggle(1, 1, doMute);
@@ -112,7 +116,8 @@ class MenuState extends PlayState
 		#end
 		Tween.tweenToRight(play);
 		Tween.tweenToLeft(credits);
-		Tween.tweenToRight(title);
+		Tween.tweenToRight(customize);
+		Tween.tweenToLeft(title);
 	}
 	
 	private function doMute(Mute:Bool):Void
@@ -188,6 +193,13 @@ class MenuState extends PlayState
 		
 		setHudVisible(false);
 		openSubState(new CreditsMenu());
+	}
+	private function showCustomize():Void
+	{
+		Util.blip();
+		
+		setHudVisible(false);
+		openSubState(new HatMenu());
 	}
 	public function setHudVisible(Visible:Bool):Void
 	{

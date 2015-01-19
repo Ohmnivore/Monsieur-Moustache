@@ -1,6 +1,7 @@
 package gen;
 
 import ent.Player;
+import ent.Scientist;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.tile.FlxTilemap;
@@ -30,6 +31,8 @@ class GenTilemap extends FlxTilemap
 		
 		settings = new GenSettings(Reset);
 		
+		x = 0;
+		y = Y;
 		widthInTiles = cast FlxG.width / TILESIZE;
 		heightInTiles = cast FlxG.height * 2 / TILESIZE;
 		
@@ -68,9 +71,6 @@ class GenTilemap extends FlxTilemap
 			iX++;
 		}
 		//trace(iStr);
-		
-		x = 0;
-		y = Y;
 	}
 	
 	private function initData():Void
@@ -170,6 +170,11 @@ class GenTilemap extends FlxTilemap
 	
 	private function addPlatform(X:Int, Y:Int, Width:Int):Void
 	{
+		if (FlxRandom.chanceRoll(33))
+		{
+			addScientist(X * TILESIZE + x, Y * TILESIZE + y);
+		}
+		
 		var strip:Strip = new Strip(cast X, Width, widthInTiles - 1, 1);
 		
 		var dV:Array<Int> = Strip.getVerboseArr(strip.width);
@@ -181,5 +186,10 @@ class GenTilemap extends FlxTilemap
 			
 			i++;
 		}
+	}
+	
+	private function addScientist(X:Float, Y:Float):Void
+	{
+		Reg.state.behindPlayer.add(new Scientist(X - 9, Y - 18));
 	}
 }

@@ -28,7 +28,8 @@ class BillBoard extends FlxSpriteGroup
 		var tOffset:Float = 8;
 		text = new FlxText(back.x + tOffset, tOffset, back.width - 2 * tOffset,
 			getPhrase());
-		text.color = 0xff000000;
+		text.color = 0xffffffff;
+		//text.alignment = "center";
 		add(text);
 	}
 	
@@ -36,9 +37,12 @@ class BillBoard extends FlxSpriteGroup
 	{
 		phrases = [];
 		
-		phrases.push("TOILET CLOGGED AGAIN, EVACUATE THE LAB IMMEDIATELY!");
-		phrases.push("WHOOPS WE FORGOT ABOUT THE TEST SUBJECTS (AGAIN)");
-		phrases.push("IT WASN'T MY FAULT I SWEAR");
+		phrases.push("Toilet clogged again, please evacuate the lab (NOW)!");
+		phrases.push("Whoops... we forgot about the test subjects (AGAIN).");
+		phrases.push("You know we're all going to be fired for this, right?");
+		phrases.push("Management will not be pleased...");
+		phrases.push("We can't destroy the place every three weeks, this has to stop!");
+		phrases.push("Did any of you check the plumber's permit? Yesh, that's what I thought!");
 	}
 	
 	static public function doDisplay():Bool

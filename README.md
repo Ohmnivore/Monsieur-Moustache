@@ -3,18 +3,24 @@
 * Optimize:
 
 * Graphics:
- * Hats
+ * Windows that show the outdoors
+ * Fez hat
+ * Wizard hat
+ * Jimi Hendrix's hat
+ * Marine helmet
+ * Viking helm
 
 * Feel & Gameplay:
+ * Punch scientists for bonus points
 
 * SFX:
  * Include Felix's tracks
 
 * UI:
- * Hat select
 
 * Biz:
  * Mobile ads (AdMob)
+ * Start selling flash version
  * Compile to iOS
 
 * Haxelib settings for Flash and Windows:

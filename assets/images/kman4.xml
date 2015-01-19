@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<opt bgColor="0xFF9D83A0" scale="3" />
+	<img src="kman4.psd" width="12" height="24" />
+	<anim name="jump" rate="2" loop="true" frames="2, 0" />
+</data>

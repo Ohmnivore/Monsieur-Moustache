@@ -10,13 +10,9 @@ import flixel.text.FlxText;
  */
 class ScoreBestText extends FlxText
 {
-	private var p:Player;
-	
-	public function new(P:Player) 
+	public function new() 
 	{
 		super(0, 1, 0);
-		
-		p = P;
 		
 		scrollFactor.set();
 		Score.setTextStyle(this);

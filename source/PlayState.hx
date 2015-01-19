@@ -2,7 +2,9 @@ package;
 
 import ent.BillBoard;
 import ent.Flood;
+import ent.Hat;
 import ent.Player;
+import ent.Scientist;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -36,12 +38,14 @@ import ui.Util;
 class PlayState extends FlxState
 {
 	public var p:Player;
+	public var hat:Hat;
 	public var cMap:FlxTypedGroup<GenTilemap>;
 	public var drag:DragNRelease;
 	public var canJump:Bool = false;
 	public var flood:Flood;
 	
 	public var backGround:FlxGroup;
+	public var behindPlayer:FlxGroup;
 	public var hud:FlxGroup;
 	
 	/**
@@ -58,9 +62,11 @@ class PlayState extends FlxState
 		
 		backGround = new FlxGroup();
 		add(backGround);
-		
 		cMap = new FlxTypedGroup();
 		add(cMap);
+		behindPlayer = new FlxGroup();
+		add(behindPlayer);
+		
 		var firstMap:GenTilemap = new GenTilemap(0, true);
 		cMap.add(firstMap);
 		
@@ -70,6 +76,11 @@ class PlayState extends FlxState
 		p = new Player(firstMap.first.x - 4, firstMap.first.y - 32);
 		add(p.stretchSpr);
 		add(p);
+		hat = new Hat(getHat(), p);
+		add(hat);
+		
+		//var sc:Scientist = new Scientist(firstMap.first.x - 9, firstMap.first.y - 18);
+		//behindPlayer.add(sc);
 		
 		drag = new DragNRelease(onPressed, onReleased);
 		
@@ -82,12 +93,28 @@ class PlayState extends FlxState
 		add(hud);
 		
 		hud.add(new Hint(FlxG.height * 1.7));
-		hud.add(new ScoreBestText(p));
+		hud.add(new ScoreBestText());
 		hud.add(new ScoreText(p));
 		if (Score.sBest != 0)
 			hud.add(new ScoreIndicator(Score.sBest));
 		
 		//DC.init();
+	}
+	
+	private function getHat():String
+	{
+		FlxG.save.bind("Elasticate");
+		
+		var ret:String = "topHat";
+		
+		if (FlxG.save.data.hat != null)
+		{
+			ret = cast FlxG.save.data.hat;
+		}
+		
+		FlxG.save.close();
+		
+		return ret;
 	}
 	
 	private function onPressed(D:DragNRelease):Void
@@ -107,6 +134,8 @@ class PlayState extends FlxState
 			p.velocity.x = -D.delta.x * Player.XVEL / 40.0;
 			
 			flood.firstJump = false;
+			
+			p.onJump();
 			
 			Sound.playJump();
 		}

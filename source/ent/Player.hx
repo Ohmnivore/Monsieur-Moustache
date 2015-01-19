@@ -69,6 +69,11 @@ class Player extends FlxSprite
 		stretchSpr = new StretchSprite(this);
 	}
 	
+	public function onJump():Void
+	{
+		Reg.state.behindPlayer.add(new JumpDust(x + width / 2.0, y + height));
+	}
+	
 	public function onCollide(M:FlxTilemap, P:Player):Void
 	{
 		if (alive)
@@ -269,5 +274,23 @@ class StretchSprite extends FlxSprite
 		FlxSpriteUtil.drawRect(this, _end.x + 6 - 1, _end.y - 1,
 			2, 2,
 			Player.FIST_COLOR, FISTLINESTYLE, FISTSTYLE, DRAWSTYLE);
+	}
+}
+
+class JumpDust extends FlxEmitter
+{
+	public function new(X:Float, Y:Float)
+	{
+		super(X, Y);
+		
+		makeParticles("images/particleSmall.png", 10, 0, false, 0.2, false);
+		
+		setColor(0xffC4C4C4, 0xffA3A3A3);
+		setAlpha(0.75, 0.75, 0.0, 0.0);
+		setXSpeed(-30, 30);
+		setYSpeed(-12, 0);
+		setRotation(0, 0);
+		
+		start(true, 0.5, 0.1, 0, 0.5);
 	}
 }

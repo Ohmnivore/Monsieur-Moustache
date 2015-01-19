@@ -10,7 +10,7 @@ import flixel.FlxGame;
 import flixel.FlxState;
 import flixel.system.scaleModes.RatioScaleMode;
 import sfx.Music;
-#if flash
+#if (flash && FGLADS)
 import FGLAds;
 #end
 
@@ -60,7 +60,7 @@ class Main extends Sprite
 		Music.play();
 		FlxG.scaleMode = new RatioScaleMode();
 		
-		#if flash
+		#if (flash && FGLADS)
 		var ads = new FGLAds(stage, "FGL-20030008");
 		ads.addEventListener(FGLAds.EVT_API_READY,
 		function (e:Event):Void 
