@@ -11,12 +11,16 @@ import flixel.util.FlxMath;
 import inp.DragNRelease;
 import social.Facebook;
 import ui.*;
+#if (android && ADS)
+import admob.AD;
+#end
 
 /**
  * A FlxState which can be used for the game's menu.
  */
 class MenuState extends PlayState
 {
+	private var sponsor:BtnBig;
 	private var play:BtnPlay;
 	private var credits:BtnWeb;
 	private var customize:BtnCustomize;
@@ -26,6 +30,9 @@ class MenuState extends PlayState
 	#if desktop
 	private var fScreen:BtnToggle;
 	private var fScreenDescr:UIText;
+	#else
+	private var lowQual:BtnToggle;
+	private var lowQualDescr:UIText;
 	#end
 	
 	/**
@@ -54,6 +61,11 @@ class MenuState extends PlayState
 		#else
 		addBtns();
 		#end
+		
+		#if (android && ADS)
+		AD.init("ca-app-pub-2673912333923494/3481995165", AD.LEFT, AD.BOTTOM, AD.BANNER_LANDSCAPE, false); //false
+		AD.show();
+		#end
 	}
 	
 	private function doLock():Void
@@ -75,11 +87,18 @@ class MenuState extends PlayState
 	
 	private function addBtns():Void
 	{
-		play = new BtnPlay(FlxG.height / 6.0, launch);
-		credits = new BtnWeb(FlxG.height / 6.0 + 42.0, showCredits);
-		customize = new BtnCustomize(FlxG.height / 6.0 + 68.0, showCustomize);
-		title = new Title(FlxG.height / 6.0 + 84.0 + 24);
+		sponsor = new BtnBig(FlxG.height / 6.0 - 12, "Sponsor", showSponsor);
+		//play = new BtnPlay(FlxG.height / 6.0, launch);
+		//credits = new BtnWeb(FlxG.height / 6.0 + 42.0, showCredits);
+		//customize = new BtnCustomize(FlxG.height / 6.0 + 68.0, showCustomize);
+		//title = new Title(FlxG.height / 6.0 + 84.0 + 24);
 		
+		play = new BtnPlay(FlxG.height / 6.0 + 30.0, launch);
+		credits = new BtnWeb(FlxG.height / 6.0 + 72.0, showCredits);
+		customize = new BtnCustomize(FlxG.height / 6.0 + 98.0, showCustomize);
+		title = new Title(FlxG.height / 6.0 + 102.0 + 24);
+		
+		hud.add(sponsor);
 		hud.add(play);
 		hud.add(credits);
 		hud.add(customize);
@@ -101,6 +120,14 @@ class MenuState extends PlayState
 		fScreenDescr = new UIText(fScreen.x - 54, 3, "Fullscreen", 8, 100);
 		fScreenDescr.alignment = "left";
 		hud.add(fScreenDescr);
+		#else
+		lowQual = new BtnToggle(FlxG.width - 19, 1, doQual);
+		lowQual.pressed = loadQual();
+		hud.add(lowQual);
+		hud.add(lowQual.click);
+		lowQualDescr = new UIText(lowQual.x - 69, 3, "Fast graphics", 8, 100);
+		lowQualDescr.alignment = "left";
+		hud.add(lowQualDescr);
 		#end
 		
 		tweenBtns();
@@ -113,11 +140,15 @@ class MenuState extends PlayState
 		#if desktop
 		Tween.tweenToRight(fScreen);
 		Tween.tweenToRight(fScreenDescr);
+		#else
+		Tween.tweenToRight(lowQual);
+		Tween.tweenToRight(lowQualDescr);
 		#end
-		Tween.tweenToRight(play);
-		Tween.tweenToLeft(credits);
-		Tween.tweenToRight(customize);
-		Tween.tweenToLeft(title);
+		Tween.tweenToRight(sponsor);
+		Tween.tweenToLeft(play);
+		Tween.tweenToRight(credits);
+		Tween.tweenToLeft(customize);
+		Tween.tweenToRight(title);
 	}
 	
 	private function doMute(Mute:Bool):Void
@@ -181,6 +212,37 @@ class MenuState extends PlayState
 		
 		return false;
 	}
+	#else
+	private function doQual(LowQual:Bool):Void
+	{
+		Reg.lowQual = LowQual;
+		
+		FlxG.save.bind("Elasticate");
+		FlxG.save.data.lowqual = LowQual;
+		FlxG.save.close();
+	}
+	private function loadQual():Bool
+	{
+		FlxG.save.bind("Elasticate");
+		if (FlxG.save.data.lowqual == null)
+		{
+			Reg.lowQual = false;
+			
+			return false;
+		}
+		else
+		{
+			if (FlxG.save.data.lowqual == true)
+			{
+				Reg.lowQual = true;
+				
+				return true;
+			}
+		}
+		FlxG.save.close();
+		
+		return false;
+	}
 	#end
 	
 	private function launch():Void
@@ -200,6 +262,12 @@ class MenuState extends PlayState
 		
 		setHudVisible(false);
 		openSubState(new HatMenu());
+	}
+	private function showSponsor():Void
+	{
+		Util.blip();
+		
+		FlxG.openURL("http://sponsor_for_monsieur_moustache.com/");
 	}
 	public function setHudVisible(Visible:Bool):Void
 	{

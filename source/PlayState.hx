@@ -10,6 +10,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
+import flixel.system.scaleModes.RatioScaleMode;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.ui.FlxButton;
@@ -29,6 +30,9 @@ import score.ScoreText;
 import sfx.Sound;
 import ui.Hint;
 import ui.Util;
+#if (android && ADS)
+import admob.AD;
+#end
 
 //import pgr.dconsole.DC;
 
@@ -53,6 +57,12 @@ class PlayState extends FlxState
 	 */
 	override public function create():Void
 	{
+		#if (android && ADS)
+		AD.hide();
+		#end
+		
+		FlxG.scaleMode = new RatioScaleMode();
+		
 		super.create();
 		BillBoard.initPhrases();
 		Score.loadScore();
@@ -86,7 +96,10 @@ class PlayState extends FlxState
 		
 		flood = new Flood();
 		flood.speed = firstMap.settings.floodSpeed;
-		add(new Blizzard(FlxG.width, FlxG.height, p, flood));
+		if (!Reg.lowQual)
+		{
+			add(new Blizzard(FlxG.width, FlxG.height, p, flood));
+		}
 		add(flood);
 		
 		hud = new FlxGroup();
@@ -240,10 +253,13 @@ class PlayState extends FlxState
 		
 		cMap.add(n);
 		
-		if (BillBoard.doDisplay())
+		if (!Reg.lowQual)
 		{
-			var bill:BillBoard = new BillBoard(n.y + n.height - 150);
-			backGround.add(bill);
+			if (BillBoard.doDisplay())
+			{
+				var bill:BillBoard = new BillBoard(n.y + n.height - 150);
+				backGround.add(bill);
+			}
 		}
 	}
 	

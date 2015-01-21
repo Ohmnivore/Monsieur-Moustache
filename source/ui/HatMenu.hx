@@ -41,6 +41,18 @@ class HatMenu extends FlxSubState
 		"Under the table authority",
 		"Life achievement"
 		];
+	#if mobile
+	private var hatCosts:Array<Int> = [
+		0,
+		50,
+		80,
+		150,
+		200,
+		250,
+		300,
+		500
+		];
+	#else
 	private var hatCosts:Array<Int> = [
 		0,
 		50,
@@ -48,9 +60,10 @@ class HatMenu extends FlxSubState
 		200,
 		400,
 		800,
-		1600,
-		3000
+		1000,
+		1200
 		];
+	#end
 	
 	override public function create():Void 
 	{

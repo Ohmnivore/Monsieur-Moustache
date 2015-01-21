@@ -71,7 +71,10 @@ class Player extends FlxSprite
 	
 	public function onJump():Void
 	{
-		Reg.state.behindPlayer.add(new JumpDust(x + width / 2.0, y + height));
+		if (!Reg.lowQual)
+		{
+			Reg.state.behindPlayer.add(new JumpDust(x + width / 2.0, y + height));
+		}
 	}
 	
 	public function onCollide(M:FlxTilemap, P:Player):Void
@@ -181,11 +184,6 @@ class DeathEmitter extends FlxEmitter
 	override public function update():Void 
 	{
 		super.update();
-		
-		//for (m in members)
-		//{
-			//m.velocity.y += p.velocity.y;
-		//}
 	}
 }
 
@@ -209,7 +207,6 @@ class StretchSprite extends FlxSprite
 		super(0, 0);
 		p = P;
 		makeGraphic(FlxG.width, FlxG.height, TRANSPARENT, true);
-		//scrollFactor.set();
 		
 		start = new FlxPoint();
 		end = new FlxPoint();
@@ -286,7 +283,7 @@ class JumpDust extends FlxEmitter
 		makeParticles("images/particleSmall.png", 10, 0, false, 0.2, false);
 		
 		setColor(0xffC4C4C4, 0xffA3A3A3);
-		setAlpha(0.75, 0.75, 0.0, 0.0);
+		setAlpha(0.5, 0.75, 0.0, 0.0);
 		setXSpeed(-30, 30);
 		setYSpeed(-12, 0);
 		setRotation(0, 0);

@@ -10,8 +10,11 @@ import flixel.FlxGame;
 import flixel.FlxState;
 import flixel.system.scaleModes.RatioScaleMode;
 import sfx.Music;
-#if (flash && FGLADS)
+#if (flash && ADS)
 import FGLAds;
+#end
+#if (android && ADS)
+import admob.AD;
 #end
 
 class Main extends Sprite 
@@ -57,16 +60,25 @@ class Main extends Sprite
 		}
 		
 		setupGame();
+		#if !TRAILER
 		Music.play();
+		#end
 		FlxG.scaleMode = new RatioScaleMode();
 		
-		#if (flash && FGLADS)
+		#if (flash && ADS)
 		var ads = new FGLAds(stage, "FGL-20030008");
 		ads.addEventListener(FGLAds.EVT_API_READY,
 		function (e:Event):Void 
 		{
 			ads.showAdPopup(); 
 		});
+		#end
+		
+		#if (android && ADS)
+		{
+			AD.init("ca-app-pub-2673912333923494/3481995165", AD.LEFT, AD.BOTTOM, AD.BANNER_LANDSCAPE, false); //false
+			AD.show();
+		}
 		#end
 	}
 	

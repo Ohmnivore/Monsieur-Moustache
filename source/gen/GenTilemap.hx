@@ -2,6 +2,7 @@ package gen;
 
 import ent.Player;
 import ent.Scientist;
+import ent.Window;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.tile.FlxTilemap;
@@ -125,8 +126,7 @@ class GenTilemap extends FlxTilemap
 		{
 			lastSpawn = Platform.getNew(new FlxPoint(LastPoint.x * TILESIZE, LastPoint.y * TILESIZE + heightInTiles * TILESIZE),
 				-Player.JUMPVEL, Player.XVEL, Player.GRAV, settings);
-			//lastSpawn.y += FlxG.height * 2.0;
-			//addPlatform(cast lastSpawn.x / TILESIZE, cast lastSpawn.y / TILESIZE, widthInTiles - 2);
+			lastSpawn.y += TILESIZE;
 			first = new FlxPoint(lastSpawn.x / TILESIZE, lastSpawn.y / TILESIZE);
 			lastSpawn.x /= TILESIZE;
 			lastSpawn.y /= TILESIZE;
@@ -170,9 +170,17 @@ class GenTilemap extends FlxTilemap
 	
 	private function addPlatform(X:Int, Y:Int, Width:Int):Void
 	{
-		if (FlxRandom.chanceRoll(33))
+		if (!Reg.lowQual)
 		{
-			addScientist(X * TILESIZE + x, Y * TILESIZE + y);
+			if (FlxRandom.chanceRoll(15) && Width > 2)
+			{
+				addScientist(X * TILESIZE + x, Y * TILESIZE + y);
+			}
+			
+			if (FlxRandom.chanceRoll(5))
+			{
+				//Reg.state.backGround.add(new Window(Y  * TILESIZE - TILESIZE + y));
+			}
 		}
 		
 		var strip:Strip = new Strip(cast X, Width, widthInTiles - 1, 1);

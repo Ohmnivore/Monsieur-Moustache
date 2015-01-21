@@ -37,7 +37,7 @@ class Scientist extends FlxSprite
 		
 		if (Reg.state.flood.y - y < FlxG.height / 3.0 && !isFlying)
 		{
-			FlxTween.linearMotion(this, x, y, x, y - FlxG.height * 2.0, 3.0, true,
+			FlxTween.linearMotion(this, x, y, x, y - FlxG.height * 2.0, 1.75, true,
 				{ ease: FlxEase.expoIn, complete: onTweenEnd } );
 			
 			animation.play("flying");
@@ -46,12 +46,6 @@ class Scientist extends FlxSprite
 			emitter = new RocketTrail(this);
 			Reg.state.behindPlayer.add(emitter);
 		}
-		
-		//if (!isOnScreen() && acceleration.y == -100)
-		//{
-			//kill();
-			//destroy();
-		//}
 	}
 	
 	private function onTweenEnd(T:FlxTween):Void
@@ -76,7 +70,7 @@ class RocketTrail extends FlxEmitter
 		makeParticles("images/particleSmall.png", 20, 0, false, 0.2, false);
 		
 		setColor(0xffFFAE00, 0xff800800);
-		setAlpha(0.75, 1.0, 0.0, 0.0);
+		setAlpha(0.5, 0.75, 0.0, 0.0);
 		setXSpeed(-50, 50);
 		setYSpeed(50, 250);
 		setRotation(0, 0);

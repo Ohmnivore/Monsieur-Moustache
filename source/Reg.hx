@@ -10,4 +10,5 @@ import flixel.util.FlxSave;
 class Reg
 {
 	public static var state:PlayState;
+	public static var lowQual:Bool;
 }

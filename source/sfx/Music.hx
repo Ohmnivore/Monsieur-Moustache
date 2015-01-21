@@ -10,7 +10,7 @@ import flixel.util.FlxRandom;
  */
 class Music
 {
-	static private var available:Array<String> = ["Jumpshot"];
+	static private var available:Array<String> = ["ChibiNinja"];
 	static private var curTrack:String = null;
 	
 	static public function play():Void

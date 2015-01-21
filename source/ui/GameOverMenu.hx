@@ -5,6 +5,9 @@ import flixel.FlxG;
 import score.Score;
 import social.Facebook;
 import social.Twitter;
+#if (android && ADS)
+import admob.AD;
+#end
 
 /**
  * ...
@@ -47,6 +50,11 @@ class GameOverMenu extends FlxSubState
 		Tween.tweenToLeft(tweet);
 		Tween.tweenToRight(fb);
 		Tween.tweenToLeft(back);
+		
+		#if (android && ADS)
+		AD.init("ca-app-pub-2673912333923494/3481995165", AD.LEFT, AD.BOTTOM, AD.BANNER_LANDSCAPE, false); //false
+		AD.show();
+		#end
 	}
 	
 	override public function update():Void 

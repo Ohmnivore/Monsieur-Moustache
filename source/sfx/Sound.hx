@@ -10,11 +10,11 @@ class Sound
 {
 	static public function playStretch():Void
 	{
-		playSound("stretch");
+		playSound("stretch", 0.45);
 	}
 	static public function playJump():Void
 	{
-		playSound("jump", 0.2);
+		playSound("jump", 0.1);
 	}
 	static public function playDeath():Void
 	{
