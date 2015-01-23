@@ -11,7 +11,7 @@ class Hint extends FlxText
 {
 	public function new(Y:Float) 
 	{
-		super(0, Y, FlxG.width / 3, "Drag down, then release to jump.");
+		super(0, Y, FlxG.width / 3, "Drag down, then release to jump.\n\nAvoid the rising water.");
 		
 		color = 0xffE1FDFF;
 		setBorderStyle(FlxText.BORDER_SHADOW, 0xff3E5154, 2, 2);

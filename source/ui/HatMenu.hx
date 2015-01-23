@@ -4,6 +4,7 @@ import ent.Hat;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxSpriteUtil;
 import score.Score;
 import score.ScoreBestText;
@@ -21,7 +22,7 @@ class HatMenu extends FlxSubState
 	private var confirm:BtnMedium;
 	private var hatIndex:Int = 0;
 	
-	private var hatFiles:Array<String> = [
+	private static var hatFiles:Array<String> = [
 		"topHat",
 		"wildWest",
 		"tricorn",
@@ -31,7 +32,7 @@ class HatMenu extends FlxSubState
 		"criminal",
 		"goldHat"
 		];
-	private var hatNames:Array<String> = [
+	private static var hatNames:Array<String> = [
 		"Gentleman's top hat",
 		"Wild West",
 		"Arr matey!",
@@ -42,7 +43,7 @@ class HatMenu extends FlxSubState
 		"Life achievement"
 		];
 	#if mobile
-	private var hatCosts:Array<Int> = [
+	private static var hatCosts:Array<Int> = [
 		0,
 		50,
 		80,
@@ -53,7 +54,7 @@ class HatMenu extends FlxSubState
 		500
 		];
 	#else
-	private var hatCosts:Array<Int> = [
+	private static var hatCosts:Array<Int> = [
 		0,
 		50,
 		100,
@@ -64,6 +65,21 @@ class HatMenu extends FlxSubState
 		1200
 		];
 	#end
+	
+	public static function hasNewHat(OldS:Int, NewS:Int):Bool
+	{
+		var i:Int = 0;
+		
+		while (i < hatCosts.length)
+		{
+			if (OldS < hatCosts[i] && NewS >= hatCosts[i])
+				return true;
+			
+			i++;
+		}
+		
+		return false;
+	}
 	
 	override public function create():Void 
 	{
@@ -170,6 +186,13 @@ class HatMenu extends FlxSubState
 		FlxG.save.data.hat = hatFiles[hatIndex];
 		
 		FlxG.save.close();
+		
+		var notif:UIText = new UIText(0, FlxG.height / 2.0, "Hat equipped!");
+		add(notif);
+		Tween.tweenToBottom(notif);
+		FlxTween.tween(notif, { alpha: 0.0 }, 4.0, { complete:
+		function(T:FlxTween) { notif.kill(); notif.kill(); }
+		} );
 	}
 	
 	private function showNext():Void

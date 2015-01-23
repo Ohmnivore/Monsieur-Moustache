@@ -33,14 +33,14 @@ class Tween
 	public static function tweenToBottom(S:FlxSprite)
 	{
 		FlxTween.linearMotion(S, S.x, S.y - FlxG.height, S.x,
-			S.y, 1, true, { type:FlxTween.ONESHOT, ease:FlxEase.bounceOut } );
+			S.y, 1, true, { type:FlxTween.ONESHOT, ease:FlxEase.elasticOut } );
 		S.y -= FlxG.height;
 	}
 	
 	public static function tweenToTop(S:FlxSprite)
 	{
 		FlxTween.linearMotion(S, S.x, S.y + FlxG.height, S.x,
-			S.y, 1, true, { type:FlxTween.ONESHOT, ease:FlxEase.bounceOut } );
+			S.y, 1, true, { type:FlxTween.ONESHOT, ease:FlxEase.elasticOut } );
 		S.y += FlxG.height;
 	}
 }

@@ -181,6 +181,11 @@ class PlayState extends FlxState
 			p.acceleration.y = Player.GRAV;
 			p.velocity.y = 0;
 		}
+		if (FlxG.keys.justPressed.Q)
+		{
+			FlxG.save.bind("Elasticate");
+			FlxG.save.erase();
+		}
 		#end
 		
 		var highest:GenTilemap = cMap.getFirstExisting();

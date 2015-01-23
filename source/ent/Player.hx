@@ -14,6 +14,10 @@ import ui.GameOverMenu;
 #if !web
 import util.ArtifactFix;
 #end
+import ui.HatMenu;
+import ui.UIText;
+import flixel.tweens.FlxTween;
+import ui.Tween;
 
 /**
  * ...
@@ -140,6 +144,13 @@ class Player extends FlxSprite
 			Reg.state.hud.clear();
 			Reg.state.openSubState(new GameOverMenu());
 			y = Reg.state.flood.y + 7;
+			
+			if (HatMenu.hasNewHat(Score.sBest, Score.s))
+			{
+				var notif:UIText = new UIText(0, 20, "New hat unlocked!");
+				Reg.state.hud.add(notif);
+				Tween.tweenToTop(notif);
+			}
 		}
 		
 		alive = false;
