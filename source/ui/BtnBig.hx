@@ -3,6 +3,7 @@ package ui;
 import flixel.FlxG;
 import flixel.ui.FlxButton;
 import flixel.text.FlxText;
+import flixel.text.FlxText.FlxTextBorderStyle;
 
 /**
  * ...
@@ -19,7 +20,7 @@ class BtnBig extends FlxButton
 		scrollFactor.set();
 		
 		label.color = 0xffE1FDFF;
-		label.setBorderStyle(FlxText.BORDER_SHADOW, 0xff3E5154, 2, 2);
+		label.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff3E5154, 2, 2);
 		
 		text = Text;
 		label.offset.x = 1;

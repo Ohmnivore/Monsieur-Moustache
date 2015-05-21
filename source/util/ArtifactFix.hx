@@ -3,8 +3,8 @@ import flash.display.BitmapData;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import flixel.FlxG;
-import flixel.util.loaders.CachedGraphics;
-import flixel.util.loaders.TextureRegion;
+import flixel.math.loaders.CachedGraphics;
+import flixel.math.loaders.TextureRegion;
 import flixel.system.layer.Region;
 
 /**

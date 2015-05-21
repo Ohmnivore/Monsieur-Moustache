@@ -2,6 +2,7 @@ package ui;
 
 import flixel.FlxG;
 import flixel.text.FlxText;
+import flixel.text.FlxText.FlxTextBorderStyle;
 
 /**
  * ...
@@ -14,13 +15,13 @@ class Hint extends FlxText
 		super(0, Y, FlxG.width / 3, "Drag down, then release to jump.\n\nAvoid the rising water.");
 		
 		color = 0xffE1FDFF;
-		setBorderStyle(FlxText.BORDER_SHADOW, 0xff3E5154, 2, 2);
+		setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff3E5154, 2, 2);
 		alignment = "center";
 	}
 	
-	override public function update():Void 
+	override public function update(elapsed:Float):Void 
 	{
-		super.update();
+		super.update(elapsed);
 		
 		x = (FlxG.width - width) / 2.0;
 		y -= 0.3;

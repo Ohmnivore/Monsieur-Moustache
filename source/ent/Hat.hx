@@ -20,12 +20,12 @@ class Hat extends FlxSprite
 		setFacingFlip(FlxObject.LEFT, true, false);
 	}
 	
-	override public function update():Void 
+	override public function update(elapsed:Float):Void 
 	{
 		if (p != null)
 			followPlayer();
 		
-		super.update();
+		super.update(elapsed);
 	}
 	
 	private function followPlayer():Void

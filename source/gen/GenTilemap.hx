@@ -6,10 +6,11 @@ import ent.Window;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.tile.FlxTilemap;
-import flixel.util.FlxPoint;
-import flixel.util.FlxRandom;
+import flixel.tile.FlxBaseTilemap.FlxTilemapAutoTiling;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRandom;
 #if !web
-import util.ArtifactFix;
+//import util.ArtifactFix;
 #end
 
 /**
@@ -44,11 +45,13 @@ class GenTilemap extends FlxTilemap
 		tempData = Beautify.getBeautiful(tempData, widthInTiles);
 		
 		#if web
-		loadMap(tempData, "images/tiles.png", TILESIZE, TILESIZE, FlxTilemap.OFF, 0, 1, 1);
+		loadMapFromArray(tempData, widthInTiles, heightInTiles, "images/tiles.png", TILESIZE, TILESIZE, FlxTilemapAutoTiling.OFF, 0, 1, 1);
 		#else
-		loadMap(tempData, ArtifactFix.artefactFix("images/tiles.png", TILESIZE, TILESIZE),
-			TILESIZE, TILESIZE, FlxTilemap.OFF, 0, 1, 1);
-		tileScaleHack = 1.03;
+		//loadMapFromArray(tempData, widthInTiles, heightInTiles, ArtifactFix.artefactFix("images/tiles.png", TILESIZE, TILESIZE),
+			//TILESIZE, TILESIZE, FlxTilemapAutoTiling.OFF, 0, 1, 1);
+		loadMapFromArray(tempData, widthInTiles, heightInTiles, "images/tiles.png", TILESIZE, TILESIZE, FlxTilemapAutoTiling.OFF, 0, 1, 1);
+		//tileScaleHack = 1.03;
+		useScaleHack = true;
 		#end
 		
 		setTileProperties(Beautify.BARREL_BOT, FlxObject.NONE);
@@ -154,7 +157,7 @@ class GenTilemap extends FlxTilemap
 			
 			if (newSpawn.y > 2)
 			{
-				var w:Int = FlxRandom.intRanged(settings.minWidth, settings.maxWidth);
+				var w:Int = new FlxRandom().int(settings.minWidth, settings.maxWidth);
 				if (w == 1)
 					setDataTile(cast newSpawn.x, cast newSpawn.y, 1);
 				else
@@ -172,12 +175,12 @@ class GenTilemap extends FlxTilemap
 	{
 		if (!Reg.lowQual)
 		{
-			if (FlxRandom.chanceRoll(15) && Width > 2)
+			if (new FlxRandom().bool(15) && Width > 2)
 			{
 				addScientist(X * TILESIZE + x, Y * TILESIZE + y);
 			}
 			
-			if (FlxRandom.chanceRoll(5))
+			if (new FlxRandom().bool(5))
 			{
 				//Reg.state.backGround.add(new Window(Y  * TILESIZE - TILESIZE + y));
 			}

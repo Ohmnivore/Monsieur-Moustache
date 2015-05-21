@@ -2,7 +2,7 @@ package sfx;
 
 import flixel.FlxG;
 import flixel.system.FlxSound;
-import flixel.util.FlxRandom;
+import flixel.math.FlxRandom;
 
 /**
  * ...
@@ -15,9 +15,11 @@ class Music
 	
 	static public function play():Void
 	{
+		#if !html5
 		var m:String = selectTrack();
 		var s:FlxSound = FlxG.sound.play(m, 1, false, true, play);
 		s.persist = true;
+		#end
 	}
 	
 	static private function selectTrack():String
@@ -34,7 +36,7 @@ class Music
 			
 			while (selected == curTrack)
 			{
-				selected = FlxRandom.getObject(available);
+				selected = new FlxRandom().getObject(available);
 			}
 			
 			ret = selected;

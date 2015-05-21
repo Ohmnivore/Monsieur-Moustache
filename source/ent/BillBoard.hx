@@ -4,7 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
-import flixel.util.FlxRandom;
+import flixel.math.FlxRandom;
 
 /**
  * ...
@@ -47,7 +47,7 @@ class BillBoard extends FlxSpriteGroup
 	
 	static public function doDisplay():Bool
 	{
-		if (phrases.length > 0 && FlxRandom.chanceRoll(20))
+		if (phrases.length > 0 && new FlxRandom().bool(20))
 			return true;
 		
 		return false;
@@ -55,7 +55,7 @@ class BillBoard extends FlxSpriteGroup
 	
 	private function getPhrase():String
 	{
-		var i:Int = FlxRandom.intRanged(0, phrases.length - 1);
+		var i:Int = new FlxRandom().int(0, phrases.length - 1);
 		var ret:String = phrases[i];
 		phrases.splice(i, 1);
 		

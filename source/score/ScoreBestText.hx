@@ -18,11 +18,11 @@ class ScoreBestText extends FlxText
 		Score.setTextStyle(this);
 	}
 	
-	override public function update():Void 
+	override public function update(elapsed:Float):Void 
 	{
 		x = FlxG.width - width - 1;
 		text = "Best Score: " + Score.sBest + "m";
 		
-		super.update();
+		super.update(elapsed);
 	}
 }

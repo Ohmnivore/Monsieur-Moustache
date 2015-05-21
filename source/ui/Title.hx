@@ -2,6 +2,7 @@ package ui;
 
 import flixel.text.FlxText;
 import flixel.FlxG;
+import flixel.text.FlxText.FlxTextBorderStyle;
 
 /**
  * ...
@@ -20,6 +21,6 @@ class Title extends FlxText
 		scrollFactor.set();
 		
 		color = 0xffE1FDFF;
-		setBorderStyle(FlxText.BORDER_SHADOW, 0xff3E5154, 2, 2);
+		setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff3E5154, 2, 2);
 	}
 }

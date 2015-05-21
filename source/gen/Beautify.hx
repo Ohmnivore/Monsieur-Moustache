@@ -1,5 +1,5 @@
 package gen;
-import flixel.util.FlxRandom;
+import flixel.math.FlxRandom;
 
 /**
  * ...
@@ -28,7 +28,7 @@ class Beautify
 				var underTile2:Int = getDataTile(M, iX, iY + 2, Width);
 				var leftTile:Int = getDataTile(M, iX - 1, iY, Width);
 				var rightTile:Int = getDataTile(M, iX + 1, iY, Width);
-				if (FlxRandom.chanceRoll(40))
+				if (new FlxRandom().bool(40))
 				{
 					if (isSolid(underTile))
 					{
@@ -104,6 +104,6 @@ class Beautify
 	
 	private static function getAny():Int
 	{
-		return FlxRandom.getObject([CRATE, BARREL_BOT, VENT]);
+		return new FlxRandom().getObject([CRATE, BARREL_BOT, VENT]);
 	}
 }
