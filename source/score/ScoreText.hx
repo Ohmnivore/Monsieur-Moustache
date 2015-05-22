@@ -23,11 +23,11 @@ class ScoreText extends FlxText
 		y = 1 + 1 + 8;
 	}
 	
-	override public function update():Void 
+	override public function update(elapsed:Float):Void 
 	{
 		x = FlxG.width - width - 1;
 		text = "Score: " + Score.getScore(p) + "m";
 		
-		super.update();
+		super.update(elapsed);
 	}
 }

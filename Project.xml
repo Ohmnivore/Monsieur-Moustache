@@ -114,7 +114,7 @@
 	
 	<compilerflag name="-swf-lib Library.swf" if="flash" />
 	<haxedef name="ADS" if="android" />
-	<!--<haxedef name="ADS" />-->
+	<haxedef name="ADS" />
 	
 	<haxelib name="admob" if="android" />
 	<java path="android-template/libs/google-play-services.jar" if="android" />

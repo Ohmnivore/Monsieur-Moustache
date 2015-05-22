@@ -4,7 +4,7 @@ import ent.Flood;
 import ent.Player;
 import flixel.addons.display.FlxStarField.FlxStarField2D;
 import flixel.FlxG;
-import flixel.util.FlxRandom;
+import flixel.math.FlxRandom;
 
 /**
  * ...
@@ -18,7 +18,7 @@ class Blizzard extends FlxStarField2D
 	
 	public function new(Width:Float, Height:Float, P:Player, F:Flood) 
 	{
-		super( 0, 0, cast Width / 2 + 32, cast Height / 2 + 36, FlxRandom.intRanged(25, 60));
+		super( 0, 0, cast Width / 2 + 32, cast Height / 2 + 36, new FlxRandom().int(25, 60));
 		
 		p = P;
 		f = F;
@@ -27,13 +27,13 @@ class Blizzard extends FlxStarField2D
 		scale.x = 2;
 		scrollFactor.set();
 		bgColor = 0x00000000;
-		starVelocityOffset.x = FlxRandom.floatRanged( -0.3, 0.3);
-		setStarSpeed(FlxRandom.intRanged(50, 150), FlxRandom.intRanged(350, 450));
-		speedY = FlxRandom.floatRanged(0.2, 0.9);
+		starVelocityOffset.x = new FlxRandom().float( -0.3, 0.3);
+		setStarSpeed(new FlxRandom().int(50, 150), new FlxRandom().int(350, 450));
+		speedY = new FlxRandom().float(0.2, 0.9);
 		alpha = 0.7;
 	}
 	
-	override public function update():Void 
+	override public function update(elapsed:Float):Void 
 	{
 		starVelocityOffset.y = -speedY - p.velocity.y * 0.004;
 		
@@ -44,6 +44,6 @@ class Blizzard extends FlxStarField2D
 		//}
 		//height = (FlxG.height - floodHeight) / 1.8;
 		
-		super.update();
+		super.update(elapsed);
 	}
 }

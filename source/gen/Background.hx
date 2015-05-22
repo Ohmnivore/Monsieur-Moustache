@@ -1,6 +1,6 @@
 package gen;
 
-import flixel.util.FlxRandom;
+import flixel.math.FlxRandom;
 
 /**
  * ...
@@ -14,6 +14,6 @@ class Background
 	
 	static public function getRandColor():Int
 	{
-		return FlxRandom.getObject(colors);
+		return new FlxRandom().getObject(colors);
 	}
 }

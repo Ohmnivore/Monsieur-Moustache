@@ -1,7 +1,7 @@
 package inp;
 import flixel.FlxG;
-import flixel.util.FlxPoint;
-import flixel.util.FlxVector;
+import flixel.math.FlxPoint;
+import flixel.math.FlxVector;
 
 /**
  * ...

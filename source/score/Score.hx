@@ -3,6 +3,7 @@ package score ;
 import ent.Player;
 import flixel.FlxG;
 import flixel.text.FlxText;
+import flixel.text.FlxText.FlxTextBorderStyle;
 
 /**
  * ...
@@ -27,7 +28,7 @@ class Score
 	
 	static public function setTextStyle(T:FlxText):Void
 	{
-		T.setBorderStyle(FlxText.BORDER_SHADOW, 0xff000000);
+		T.setBorderStyle(FlxTextBorderStyle.SHADOW, 0xff000000);
 	}
 	
 	static public function saveScore():Void

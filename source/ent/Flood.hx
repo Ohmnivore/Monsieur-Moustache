@@ -21,7 +21,7 @@ class Flood extends FlxSpriteGroup
 	private var frameTwo:FlxSprite;
 	
 	private var frameId:Int = 0;
-	private var elapsed:Float = 0;
+	private var _elapsed:Float = 0;
 	
 	public function new() 
 	{
@@ -62,7 +62,7 @@ class Flood extends FlxSpriteGroup
 	private function stampFrames(Frame:String, Spr:FlxSprite)
 	{
 		frameHolder.animation.play(Frame, true);
-		frameHolder.update();
+		frameHolder.update(_elapsed);
 		
 		Spr.makeGraphic(FlxG.width + 48, FlxG.height, 0xff4B8473, true);
 		Spr.alpha = 0.7;
@@ -79,35 +79,46 @@ class Flood extends FlxSpriteGroup
 			else if (frameHolder.animation.name == "frame2")
 				frameHolder.animation.play("frame0", true);
 			
-			frameHolder.update();
+			frameHolder.update(_elapsed);
 			
 			iX += 16;
 		}
 	}
 	
-	override public function update():Void 
+	override public function draw():Void 
+	{
+		//if (y - Reg.state.p.y > maxDistance)
+			//y = Reg.state.p.y + maxDistance;
+		
+		super.draw();
+	}
+	
+	override public function update(elapsed:Float):Void 
 	{
 		if (firstJump)
-			velocity.y = -2;
+			velocity.y = -2 * elapsed * 48;
 		else
-			velocity.y = -speed;
+			velocity.y = -speed * elapsed * 48;
 		
 		if (y - Reg.state.p.y > maxDistance)
-			y = Reg.state.p.y + maxDistance;
+		{
+			y = Math.ceil(Reg.state.p.y) + maxDistance;
+			velocity.y = 0;
+		}
 		
-		super.update();
+		super.update(elapsed);
 		
 		if (Reg.state.p.y > y + 8)
 		{
 			firstJump = false;
-			velocity.y = -speed;
+			velocity.y = -speed * elapsed * 48;
 			
 			Reg.state.p.onDeath();
 		}
 		
 		//Animation
-		elapsed += FlxG.elapsed;
-		if (elapsed > 1.0 / 6.0)
+		_elapsed += FlxG.elapsed;
+		if (_elapsed > 1.0 / 6.0)
 		{
 			frameId++;
 			if (frameId > 2)
@@ -124,7 +135,7 @@ class Flood extends FlxSpriteGroup
 			if (frameId == 2)
 				frameTwo.visible = true;
 			
-			elapsed = 0;
+			_elapsed = 0;
 		}
 	}
 }

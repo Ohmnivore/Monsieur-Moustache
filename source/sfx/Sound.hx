@@ -31,8 +31,10 @@ class Sound
 	
 	static private function playSound(S:String, Volume:Float = 1.0):Void
 	{
+		#if !html5
 		var s:String = "sounds/" + Util.addExtension(S);
 		
 		FlxG.sound.play(s, Volume);
+		#end
 	}
 }

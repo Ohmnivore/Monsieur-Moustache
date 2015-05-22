@@ -190,7 +190,7 @@ class HatMenu extends FlxSubState
 		var notif:UIText = new UIText(0, FlxG.height / 2.0, "Hat equipped!");
 		add(notif);
 		Tween.tweenToBottom(notif);
-		FlxTween.tween(notif, { alpha: 0.0 }, 4.0, { complete:
+		FlxTween.tween(notif, { alpha: 0.0 }, 4.0, { onComplete:
 		function(T:FlxTween) { notif.kill(); notif.kill(); }
 		} );
 	}

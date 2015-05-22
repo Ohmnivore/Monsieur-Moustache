@@ -76,7 +76,7 @@ class Main extends Sprite
 		
 		#if (android && ADS)
 		{
-			AD.init("ca-app-pub-2673912333923494/3481995165", AD.LEFT, AD.BOTTOM, AD.BANNER_LANDSCAPE, false); //false
+			AD.init("ca-app-pub-3957994598949973/3248342041", AD.LEFT, AD.BOTTOM, AD.BANNER_LANDSCAPE, false); //false
 			AD.show();
 		}
 		#end
@@ -97,5 +97,7 @@ class Main extends Sprite
 		}
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+		FlxG.fixedTimestep = true;
+		FlxG.camera.pixelPerfectRender = false;
 	}
 }

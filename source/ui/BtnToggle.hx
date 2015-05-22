@@ -36,7 +36,7 @@ class BtnToggle extends FlxSprite
 			call(pressed);
 	}
 	
-	override public function update():Void 
+	override public function update(elapsed:Float):Void 
 	{
 		if (pressed && playing != "on")
 		{
@@ -49,6 +49,6 @@ class BtnToggle extends FlxSprite
 			playing = "off";
 		}
 		
-		super.update();
+		super.update(elapsed);
 	}
 }

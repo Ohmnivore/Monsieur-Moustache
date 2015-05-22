@@ -14,15 +14,15 @@ import flixel.system.scaleModes.RatioScaleMode;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.ui.FlxButton;
-import flixel.util.FlxMath;
-import flixel.util.FlxPoint;
-import flixel.util.FlxVector;
+import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
+import flixel.math.FlxVector;
 import gen.Background;
 import gen.Blizzard;
 import gen.GenTilemap;
 import gen.Platform;
 import inp.DragNRelease;
-import flixel.group.FlxTypedGroup;
+//import flixel.group.FlxTypedGroup;
 import score.ScoreBestText;
 import score.Score;
 import score.ScoreIndicator;
@@ -166,7 +166,7 @@ class PlayState extends FlxState
 	/**
 	 * Function that is called once every frame.
 	 */
-	override public function update():Void
+	override public function update(elapsed:Float):Void
 	{
 		canJump = false;
 		
@@ -248,13 +248,13 @@ class PlayState extends FlxState
 			p.stretch = false;
 		}
 		
-		super.update();
+		super.update(FlxG.elapsed);
 	}
 	private function addNewMap(Highest:GenTilemap):Void
 	{
 		var n:GenTilemap = new GenTilemap(Highest.y - FlxG.height * 2, false, GenTilemap.lastPl);
 		flood.speed = n.settings.floodSpeed;
-		n.update();
+		n.update(FlxG.elapsed);
 		
 		cMap.add(n);
 		

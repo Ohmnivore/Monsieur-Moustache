@@ -1,6 +1,6 @@
 package gen;
-import flixel.util.FlxPoint;
-import flixel.util.FlxRandom;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRandom;
 
 /**
  * ...
@@ -10,16 +10,16 @@ class Platform
 {
 	static public function getNew(Start:FlxPoint, MaxY:Float, MaxX:Float, Grav:Float, S:GenSettings):FlxPoint
 	{
-		MaxX = FlxRandom.floatRanged(MaxX * S.minVelX, MaxX * S.maxVelX);
-		Grav = FlxRandom.floatRanged(Grav * S.minGrav, Grav * S.maxGrav);
+		MaxX = new FlxRandom().float(MaxX * S.minVelX, MaxX * S.maxVelX);
+		Grav = new FlxRandom().float(Grav * S.minGrav, Grav * S.maxGrav);
 		
-		if (FlxRandom.chanceRoll())
+		if (new FlxRandom().bool())
 		{
 			MaxX = -MaxX;
 		}
 		
 		var secondZero:Float = inverseAfterSummit(0, 0, MaxY, Grav);
-		var t:Float = FlxRandom.floatRanged(secondZero * S.minTime, secondZero * S.maxTime);
+		var t:Float = new FlxRandom().float(secondZero * S.minTime, secondZero * S.maxTime);
 		
 		var ypos:Float = (Grav * Math.pow(t, 2.0)) / 2.0 + MaxY * t + Start.y;
 		var xpos:Float = MaxX * t + Start.x;
