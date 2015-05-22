@@ -1,4 +1,5 @@
-![](http://fouramgames.com/press/monsieur_moustache/images/screen2.png)
+![Screenshot](http://fouramgames.com/press/monsieur_moustache/images/screen2.png)
+![Game over screenshot](http://fouramgames.com/press/monsieur_moustache/images/screen3.png)
 
 ### Links
 * [Google Play](https://play.google.com/store/apps/details?id=com.fouramgames.monsieurmoustache)
