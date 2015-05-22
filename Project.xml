@@ -92,7 +92,22 @@
 	<!--<haxedef name="TRAILER" />-->
 	
 	<haxedef name="fdb" if="target_flash"/>
-	<icon path="icon/icon.svg" />
+    
+    <icon path="icon/icon16.png" size="16" /> <!--Desktop-->
+	<icon path="icon/icon24.png" size="24" /> <!--Desktop-->
+	<icon path="icon/icon32.png" size="32" /> <!--Desktop-->
+	<icon path="icon/icon40.png" size="40" /> <!--Desktop-->
+	<icon path="icon/icon36.png" size="36" />
+	<icon path="icon/icon48.png" size="48" />
+	<icon path="icon/icon64.png" size="64" />
+	<icon path="icon/icon72.png" size="72" />
+	<icon path="icon/icon96.png" size="96" />
+	<icon path="icon/icon128.png" size="128" /> <!--Desktop-->
+	<icon path="icon/icon144.png" size="144" />
+	<icon path="icon/icon192.png" size="192" />
+	<icon path="icon/icon256.png" size="256" /> <!--Desktop-->
+    
+	<!-- <icon path="icon/icon.svg" /> -->
 	<!--<icon path="icon/icon.png" />-->
 	<android install-location="preferExternal" />
 	<!--<template path="AndroidManifest.xml" rename="AndroidManifest.xml" if="android"/>-->

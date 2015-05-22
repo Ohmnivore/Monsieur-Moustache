@@ -52,7 +52,7 @@ class GameOverMenu extends FlxSubState
 		Tween.tweenToLeft(back);
 		
 		#if (android && ADS)
-		AD.init("ca-app-pub-2673912333923494/3481995165", AD.LEFT, AD.BOTTOM, AD.BANNER_LANDSCAPE, false); //false
+		AD.init("ca-app-pub-2673912333923494/3481995165", AD.LEFT, AD.BOTTOM, AD.BANNER_PORTRAIT, false); //false
 		AD.show();
 		#end
 	}

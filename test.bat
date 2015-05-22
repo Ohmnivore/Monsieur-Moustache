@@ -1,0 +1,2 @@
+C:\Development\Android_SDK\platform-tools\adb.exe install export/android/bin/bin/SunpunchMoonkick-debug.apk
+C:\Development\Android_SDK\platform-tools\adb.exe shell am start -n com.example.myapp/com.example.myapp.MainActivity

@@ -9,7 +9,7 @@ import flixel.FlxSubState;
  */
 class CreditsMenu extends FlxSubState
 {
-	private static var DEVPAGE:String = "http://ohmnivore.elementfx.com/press/index.php";
+	private static var DEVPAGE:String = "http://fouramgames.com";
 	private static var BUCHPAGE:String = "http://opengameart.org/users/buch";
 	private static var SKIFFPAGE:String = "http://ericskiff.com/music/";
 	

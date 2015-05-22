@@ -1,0 +1,2 @@
+C:\Development\Android_SDK\platform-tools\adb.exe shell am force-stop com.example.myapp
+C:\Development\Android_SDK\platform-tools\adb.exe shell am start -a android.intent.action.DELETE -d package:com.example.myapp

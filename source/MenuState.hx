@@ -20,7 +20,7 @@ import admob.AD;
  */
 class MenuState extends PlayState
 {
-	private var sponsor:BtnBig;
+	//private var sponsor:BtnBig;
 	private var play:BtnPlay;
 	private var credits:BtnWeb;
 	private var customize:BtnCustomize;
@@ -63,7 +63,7 @@ class MenuState extends PlayState
 		#end
 		
 		#if (android && ADS)
-		AD.init("ca-app-pub-2673912333923494/3481995165", AD.LEFT, AD.BOTTOM, AD.BANNER_LANDSCAPE, false); //false
+		AD.init("ca-app-pub-2673912333923494/3481995165", AD.LEFT, AD.BOTTOM, AD.BANNER_PORTRAIT, false); //false
 		AD.show();
 		#end
 	}
@@ -87,18 +87,18 @@ class MenuState extends PlayState
 	
 	private function addBtns():Void
 	{
-		sponsor = new BtnBig(FlxG.height / 6.0 - 12, "Sponsor", showSponsor);
+		//sponsor = new BtnBig(FlxG.height / 6.0 - 12, "Sponsor", showSponsor);
 		//play = new BtnPlay(FlxG.height / 6.0, launch);
 		//credits = new BtnWeb(FlxG.height / 6.0 + 42.0, showCredits);
 		//customize = new BtnCustomize(FlxG.height / 6.0 + 68.0, showCustomize);
 		//title = new Title(FlxG.height / 6.0 + 84.0 + 24);
 		
-		play = new BtnPlay(FlxG.height / 6.0 + 30.0, launch);
-		credits = new BtnWeb(FlxG.height / 6.0 + 72.0, showCredits);
-		customize = new BtnCustomize(FlxG.height / 6.0 + 98.0, showCustomize);
-		title = new Title(FlxG.height / 6.0 + 102.0 + 24);
+		play = new BtnPlay(FlxG.height / 24.0 + 30.0, launch);
+		credits = new BtnWeb(FlxG.height / 24.0 + 72.0, showCredits);
+		customize = new BtnCustomize(FlxG.height / 24.0 + 98.0, showCustomize);
+		title = new Title(FlxG.height / 24.0 + 102.0 + 24);
 		
-		hud.add(sponsor);
+		//hud.add(sponsor);
 		hud.add(play);
 		hud.add(credits);
 		hud.add(customize);
@@ -144,7 +144,7 @@ class MenuState extends PlayState
 		Tween.tweenToRight(lowQual);
 		Tween.tweenToRight(lowQualDescr);
 		#end
-		Tween.tweenToRight(sponsor);
+		//Tween.tweenToRight(sponsor);
 		Tween.tweenToLeft(play);
 		Tween.tweenToRight(credits);
 		Tween.tweenToLeft(customize);
@@ -263,12 +263,12 @@ class MenuState extends PlayState
 		setHudVisible(false);
 		openSubState(new HatMenu());
 	}
-	private function showSponsor():Void
-	{
-		Util.blip();
-		
-		FlxG.openURL("http://sponsor_for_monsieur_moustache.com/");
-	}
+	//private function showSponsor():Void
+	//{
+		//Util.blip();
+		//
+		//FlxG.openURL("http://sponsor_for_monsieur_moustache.com/");
+	//}
 	public function setHudVisible(Visible:Bool):Void
 	{
 		hud.visible = Visible;

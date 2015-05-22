@@ -7,7 +7,7 @@ import flixel.FlxG;
  */
 class SiteLock
 {
-	private static var siteLockEnabled:Bool = true;
+	private static var siteLockEnabled:Bool = false;
 	private static var allowedDomains:Array<String> = ["https://www.fgl.com/",
 		"https://www.flashgamelicense.com/",
 		"http://fouramgames.com/"];
