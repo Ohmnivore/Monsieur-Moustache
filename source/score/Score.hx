@@ -52,6 +52,10 @@ class Score
 		}
 		
 		FlxG.save.close();
+		
+		#if android
+		Reg.board.setScore(s);
+		#end
 	}
 	
 	static public function loadScore():Void

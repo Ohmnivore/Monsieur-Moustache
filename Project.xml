@@ -120,4 +120,9 @@
 	<java path="android-template/libs/google-play-services.jar" if="android" />
 	<template path="android-template/AndroidManifest.xml" rename="AndroidManifest.xml" if="android" />
 	<template path="android-template/src/org/haxe/lime/GameActivity.java" rename="src/org/haxe/lime/GameActivity.java" if="android" />
+	
+	<!--<haxelib name="openfl-gpg" if="android" />-->
+	<setenv name="GOOGLE_PLAY_GAMES_ID" value="723250102717" if="android" />
+	<haxelib name="linden-google-play" if="android" />
+	<template path="ids.xml" rename="res/values/ids.xml" if="android" />
 </project>

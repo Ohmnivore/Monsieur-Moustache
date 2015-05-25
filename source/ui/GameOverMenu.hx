@@ -40,19 +40,34 @@ class GameOverMenu extends FlxSubState
 		var tweet:BtnTweet = new BtnTweet(FlxG.height / 6.0 + 42.0, shareTweet);
 		var fb:BtnFacebook = new BtnFacebook(FlxG.height / 6.0 + 68.0, shareFacebook);
 		var back:BtnBack = new BtnBack(FlxG.height / 6.0 + 94.0, backToMenu);
+		#if android
+		var scores:BtnScores = new BtnScores(FlxG.height / 6.0 + 42.0, showScores);
+		add(scores);
+		tweet.y += 26;
+		fb.y += 26;
+		back.y += 26;
+		#end
 		
 		add(play);
 		add(tweet);
 		add(fb);
 		add(back);
 		
+		#if android
+		Tween.tweenToRight(scores);
+		Tween.tweenToLeft(play);
+		Tween.tweenToRight(tweet);
+		Tween.tweenToLeft(fb);
+		Tween.tweenToRight(back);
+		#else
 		Tween.tweenToRight(play);
 		Tween.tweenToLeft(tweet);
 		Tween.tweenToRight(fb);
 		Tween.tweenToLeft(back);
+		#end
 		
 		#if (android && ADS)
-		AD.init("ca-app-pub-2673912333923494/3481995165", AD.LEFT, AD.BOTTOM, AD.BANNER_PORTRAIT, false); //false
+		AD.init("ca-app-pub-3957994598949973/3248342041", AD.LEFT, AD.BOTTOM, AD.BANNER_PORTRAIT, false); //false
 		AD.show();
 		#end
 	}
@@ -70,6 +85,12 @@ class GameOverMenu extends FlxSubState
 	private function launch():Void
 	{
 		FlxG.switchState(new PlayState());
+	}
+	private function showScores():Void
+	{
+		#if android
+		Reg.board.viewScores();
+		#end
 	}
 	private function shareTweet():Void
 	{

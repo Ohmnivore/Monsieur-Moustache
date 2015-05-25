@@ -38,6 +38,8 @@ class Player extends FlxSprite
 	public var stretchSpr:StretchSprite;
 	public var stretchHack:Int = 0;
 	
+	private var touchBuffer:Bool = false;
+	
 	public function new(X:Float, Y:Float) 
 	{
 		super(X, Y);
@@ -79,6 +81,7 @@ class Player extends FlxSprite
 		{
 			Reg.state.behindPlayer.add(new JumpDust(x + width / 2.0, y + height));
 		}
+		touchBuffer = false;
 	}
 	
 	public function onCollide(M:FlxTilemap, P:Player):Void
@@ -88,6 +91,15 @@ class Player extends FlxSprite
 			velocity.x = 0;
 			
 			animation.play("idle");
+		}
+		
+		if (!touchBuffer)
+		{
+			if (!Reg.lowQual)
+			{
+				Reg.state.behindPlayer.add(new JumpDust(x + width / 2.0, y + height));
+			}
+			touchBuffer = true;
 		}
 	}
 	

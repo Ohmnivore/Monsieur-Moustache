@@ -4,11 +4,21 @@
 	::if (ANDROID_PERMISSIONS != null)::::foreach ANDROID_PERMISSIONS::
 	<uses-permission android:name="::__current__::" />::end::::end::
 	
-	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16"/>
+	<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="19"/>
 	
 	<application android:label="Monsieur Moustache" android:debuggable="false" android:icon="@drawable/icon" >
 		
-		<meta-data android:name="com.google.android.gms.version" android:value="4323000" />
+		<!-- for linden-google-play -->
+		<meta-data
+		  android:name="com.google.android.gms.version"
+		  android:value="@integer/google_play_services_version" />
+		<meta-data
+		  android:name="com.google.android.gms.games.APP_ID"
+		  android:value="@string/app_id" />
+		<meta-data
+		  android:name="com.google.android.gms.appstate.APP_ID"
+		  android:value="@string/app_id" />
+		<!-- / -->
 		
 		<activity android:name="com.fouramgames.monsieurmoustache.MainActivity" android:launchMode="singleTask" android:label="Monsieur Moustache" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:screenOrientation="sensorPortrait" >
 			

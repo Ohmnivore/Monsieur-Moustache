@@ -16,6 +16,11 @@ import FGLAds;
 #if (android && ADS)
 import admob.AD;
 #end
+#if android
+import ru.zzzzzzerg.linden.GooglePlay;
+import ru.zzzzzzerg.linden.play.*;
+import score.Board;
+#end
 
 class Main extends Sprite 
 {
@@ -76,9 +81,24 @@ class Main extends Sprite
 		
 		#if (android && ADS)
 		{
-			AD.init("ca-app-pub-2673912333923494/3481995165", AD.LEFT, AD.BOTTOM, AD.BANNER_LANDSCAPE, false); //false
+			AD.init("ca-app-pub-3957994598949973/3248342041", AD.LEFT, AD.BOTTOM, AD.BANNER_LANDSCAPE, false); //false
 			AD.show();
 		}
+		#end
+		
+		#if android
+		var g:GooglePlay = new GooglePlay(new GooglePlayHandler(this));
+		Reg.googleAvailable = g.isAvailable();
+		
+		if (Reg.googleAvailable)
+		{
+			if (MenuState.loadGPlay())
+				g.games.connect();
+			else
+				if (g.games.isSignedIn())
+					g.games.connect();
+		}
+		Reg.board = new Board(g);
 		#end
 	}
 	
@@ -99,3 +119,31 @@ class Main extends Sprite
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 	}
 }
+
+#if android
+class GooglePlayHandler extends ConnectionHandler
+{
+  var _m : Main;
+
+  public function new(m : Main)
+  {
+    super();
+    _m = m;
+  }
+
+  override public function onWarning(msg : String, where : String)
+  {
+    trace(["Warning", msg, where]);
+  }
+
+  override public function onError(what : String, code : Int, where : String)
+  {
+    trace(["Error", what, code, where]);
+  }
+
+  override public function onException(msg : String, where : String)
+  {
+    trace(["Exception", msg, where]);
+  }
+}
+#end

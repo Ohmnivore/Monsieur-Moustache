@@ -140,9 +140,9 @@ class PlayState extends FlxState
 	{
 		if (canJump && p.alive)
 		{
-			if (p.velocity.y < 0)
-				p.velocity.y -= D.delta.y * Player.JUMPVEL / 40.0;
-			else
+			//if (p.velocity.y < 0)
+				//p.velocity.y = D.delta.y * Player.JUMPVEL / 40.0;
+			//else
 				p.velocity.y = -D.delta.y * Player.JUMPVEL / 40.0;
 			p.velocity.x = -D.delta.x * Player.XVEL / 40.0;
 			

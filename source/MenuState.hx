@@ -34,6 +34,12 @@ class MenuState extends PlayState
 	private var lowQual:BtnToggle;
 	private var lowQualDescr:UIText;
 	#end
+	#if android
+	private var scores:BtnScores;
+	//#end
+	private var gPlay:BtnToggle;
+	private var gPlayDescr:UIText;
+	#end
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -129,6 +135,20 @@ class MenuState extends PlayState
 		lowQualDescr.alignment = "left";
 		hud.add(lowQualDescr);
 		#end
+		#if android
+		scores = new BtnScores(FlxG.height / 24.0 + 124.0, showScores);
+		hud.add(scores);
+		title.y += 22;
+		//#end
+		
+		gPlay = new BtnToggle(1, title.y + 40, doGPlay);
+		gPlay.pressed = loadGPlay();
+		hud.add(gPlay);
+		hud.add(gPlay.click);
+		gPlayDescr = new UIText(gPlay.x + gPlay.width, gPlay.y + 2, "Sign into Google on startup", 8, 300);
+		gPlayDescr.alignment = "left";
+		hud.add(gPlayDescr);
+		#end
 		
 		tweenBtns();
 	}
@@ -148,7 +168,12 @@ class MenuState extends PlayState
 		Tween.tweenToLeft(play);
 		Tween.tweenToRight(credits);
 		Tween.tweenToLeft(customize);
+		#if android
+		Tween.tweenToRight(scores);
+		Tween.tweenToLeft(title);
+		#else
 		Tween.tweenToRight(title);
+		#end
 	}
 	
 	private function doMute(Mute:Bool):Void
@@ -179,6 +204,23 @@ class MenuState extends PlayState
 		}
 		FlxG.save.close();
 		
+		return false;
+	}
+	private function doGPlay(V:Bool):Void
+	{
+		FlxG.save.bind("Elasticate");
+		FlxG.save.data.gplay = V;
+		FlxG.save.close();
+	}
+	public static function loadGPlay():Bool
+	{
+		FlxG.save.bind("Elasticate");
+		if (FlxG.save.data.gplay == null)
+			return true;
+		else
+			if (FlxG.save.data.gplay == true)
+				return true;
+		FlxG.save.close();
 		return false;
 	}
 	#if desktop
@@ -262,6 +304,12 @@ class MenuState extends PlayState
 		
 		setHudVisible(false);
 		openSubState(new HatMenu());
+	}
+	private function showScores():Void
+	{
+		#if android
+		Reg.board.viewScores();
+		#end
 	}
 	//private function showSponsor():Void
 	//{
