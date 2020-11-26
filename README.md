@@ -1,10 +1,12 @@
-![Screenshot](http://fouramgames.com/press/monsieur_moustache/images/screen2.png)
-![Game over screenshot](http://fouramgames.com/press/monsieur_moustache/images/screen3.png)
+![](https://fouramgames.com/images/P_MonsieurMoustache3.png)
+
+![](https://fouramgames.com/images/P_MonsieurMoustache2.png)
+
+![](https://fouramgames.com/images/P_MonsieurMoustache4.png)
 
 ### Links
 * [Google Play](https://play.google.com/store/apps/details?id=com.fouramgames.monsieurmoustache)
 * [itch.io](http://ohmnivore.itch.io/monsieur-moustache)
-* [Presskit](http://fouramgames.com/press/sheet.php?p=monsieur_moustache)
 
 ### Haxelib versions - works for Android, Windows, and Flash
 * flixel 3.3.6
